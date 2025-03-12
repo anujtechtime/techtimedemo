@@ -875,15 +875,15 @@ class IrActionsReport(models.Model):
 
 
                 placeholder_mapping = {
-                    '{{docs.partner_id.display_name}}' : docs.partner_id.display_name,  # Replace with your actual field name
+                    'To: {{docs.partner_id.display_name}}' : "To: " + docs.partner_id.display_name,  # Replace with your actual field name
                     'state_id' : docs.partner_id.state_id.name,
                     'country_id' : docs.partner_id.country_id.name,
                     'Currency: {{docs.currency_id.name}}' : "Currency:" + docs.currency_id.name,
-                    'INVOICE #{{docs.display_name}}' : "#" +  docs.display_name,
-                    '{{docs.invoice_date}}' : docs.invoice_date,
+                    'Invoice No.: {{docs.display_name}}' : "Invoice No.: #" +  docs.display_name,
+                    'Invoice Date: {{docs.invoice_date}}' : "Invoice Date:" + docs.invoice_date,
                     # "RFQ: {{docs.custumer_po_number}}" : "RFQ: " +  custumer_po_number,
-                    "PO No: {{docs.custumer_po_number}}" : "PO No: " + custumer_po_number,
-                    "{{payment_method}}" : payment_method
+                    "PO NO.: {{docs.custumer_po_number}}" : "PO No.: " + custumer_po_number,
+                    "Payment Term: {{payment_method}} " : "Payment Term:" + payment_method
 
                     # 'Quotation Validity: {{docs.validity_date}}' : "Quotation Validity:" + docs.validity_date.date(),
                     # "{{docs.order_line.product_id.display_name}}" : docs.order_line.product_id.display_name
