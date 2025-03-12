@@ -880,7 +880,7 @@ class IrActionsReport(models.Model):
                     'country_id' : docs.partner_id.country_id.name,
                     'Currency: {{docs.currency_id.name}}' : "Currency:" + docs.currency_id.name,
                     'Invoice No.: {{docs.display_name}}' : "Invoice No.: #" +  docs.display_name,
-                    'Invoice Date: {{docs.invoice_date}}' : "Invoice Date:" + docs.invoice_date,
+                    'Invoice Date: {{docs.invoice_date}}' : "Invoice Date:" + docs.invoice_date.strftime("%Y-%m-%d %H:%M:%S"),
                     # "RFQ: {{docs.custumer_po_number}}" : "RFQ: " +  custumer_po_number,
                     "PO NO.: {{docs.custumer_po_number}}" : "PO No.: " + custumer_po_number,
                     "Payment Term: {{payment_method}} " : "Payment Term:" + payment_method
