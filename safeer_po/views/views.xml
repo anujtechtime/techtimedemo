@@ -1,0 +1,170 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+<!--
+    <record model="ir.ui.view" id="safeer_po.list">
+      <field name="name">safeer_po list</field>
+      <field name="model">safeer_po.safeer_po</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+-->
+
+
+      <record model="ir.ui.view" id="view_any_name_purchase_order_form">
+        <field name="name">purchase.order.form</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <!-- <field name="type">form</field> -->
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='date_order']" position="after">
+                <field name="requested_costumer" />
+        </xpath>
+        </field>
+      </record>
+
+
+      <record model="ir.ui.view" id="view_any_name_sale_order_form">
+        <field name="name">sale.order.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <!-- <field name="type">form</field> -->
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='payment_term_id']" position="after">
+                <field name="custumer_po_number"/>
+                <field name="custumer_req_number"/>
+        </xpath>
+        </field>
+      </record>
+
+
+      <record model="ir.ui.view" id="view_any_name_account_move_form">
+        <field name="name">account.move.form</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <!-- <field name="type">form</field> -->
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='ref']" position="after">
+                <field name="custumer_po_number"/>
+                <field name="requested_costumer"/>
+        </xpath>
+        </field>
+      </record>
+
+<!--       <record id="ir_actions_server_report_custumer_profit_report" model="ir.actions.server">
+        <field name="name">custumer profit report</field>
+        <field name="type">ir.actions.server</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="state">code</field>
+        <field name="code">
+            if records:
+                action = records.report_custumer_profit_report()
+        </field>
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+        <field name="binding_view_types">list,form</field>
+    </record>
+ -->
+
+      <record model="ir.ui.view" id="view_any_name_stock_picking_form">
+        <field name="name">stock.picking.form</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <!-- <field name="type">form</field> -->
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='origin']" position="after">
+                <field name="custumer_po_number"/>
+        </xpath>
+        </field>
+      </record>
+
+
+
+      <record id="view_customer_profit_wizard_wizard_data" model="ir.ui.view">
+       <field name="name">customer.profit.wizard.view</field>
+       <field name="model">customer.profit.wizard</field>
+       <field name="type">form</field>
+       <field name="arch" type="xml">
+           <form>
+            <label for="requested_costumer" name="requested_costumer" />
+               <field name="requested_costumer"  widget="many2many_tags" />
+            <label for="date_start" name="date_start" />
+               <field name="date_start"/>
+            <label for="date_end" name="date_end" />   
+                <field name="date_end" />
+               <footer>
+                   <button name="action_done" string="Print" type="object" class="oe_highlight"/>
+                   <button string="Cancel" class="btn btn-default" special="cancel"/>
+               </footer>
+           </form>
+       </field>
+    </record>
+
+
+
+    <record id="action_customer_profit_wizard_wiz" model="ir.actions.act_window">
+                <field name="name">Customer Profit Wizard</field>
+                <field name="type">ir.actions.act_window</field>
+                <field name="res_model">customer.profit.wizard</field>
+                <field name="view_mode">form</field>
+                <field name="context">{}</field>
+                <field name="view_id" ref="safeer_po.view_customer_profit_wizard_wizard_data"/>
+                <field name="target">new</field>
+                
+            </record>
+
+
+            <menuitem action="action_customer_profit_wizard_wiz" id="manu_customer_profit_wizard_wiz" parent="account.menu_finance_receivables" sequence="15" name="Customer Profit Report"/>
+
+      
+
+
+
+
+    <!-- actions opening views on models -->
+<!--
+    <record model="ir.actions.act_window" id="safeer_po.action_window">
+      <field name="name">safeer_po window</field>
+      <field name="res_model">safeer_po.safeer_po</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+-->
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="safeer_po.action_server">
+      <field name="name">safeer_po server</field>
+      <field name="model_id" ref="model_safeer_po_safeer_po"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+<!--
+    <menuitem name="safeer_po" id="safeer_po.menu_root"/>
+-->
+    <!-- menu categories -->
+<!--
+    <menuitem name="Menu 1" id="safeer_po.menu_1" parent="safeer_po.menu_root"/>
+    <menuitem name="Menu 2" id="safeer_po.menu_2" parent="safeer_po.menu_root"/>
+-->
+    <!-- actions -->
+<!--
+    <menuitem name="List" id="safeer_po.menu_1_list" parent="safeer_po.menu_1"
+              action="safeer_po.action_window"/>
+    <menuitem name="Server to list" id="safeer_po" parent="safeer_po.menu_2"
+              action="safeer_po.action_server"/>
+-->
+  </data>
+</odoo>

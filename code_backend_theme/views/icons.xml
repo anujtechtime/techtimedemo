@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <menuitem id="base.menu_administration" name="Settings"
+                  web_icon="code_backend_theme,static/src/img/icons/settings.png"/>
+        <menuitem id="base.menu_management" name="Apps" web_icon="code_backend_theme,static/src/img/icons/apps.png"/>
+        <menuitem id="mail.menu_root_discuss" name="Discuss"
+                  web_icon="code_backend_theme,static/src/img/icons/discuss.png"/>
+
+
+      <record id="sale.action_quotations_with_onboarding" model="ir.actions.act_window">
+            <field name="view_id" ref="sale.view_sale_order_kanban"/>
+            <field name="view_mode">kanban,tree,form,calendar,pivot,graph,activity</field>
+
+</record>
+
+
+<record id="purchase.purchase_rfq" model="ir.actions.act_window">
+<field name="view_mode">kanban,tree,form,pivot,graph,calendar,activity</field>
+            <field name="view_id" ref="purchase.view_purchase_order_kanban"/>
+
+</record>
+
+<record id="stock.action_picking_tree_all" model="ir.actions.act_window">
+<field name="view_mode">kanban,tree,form,calendar</field>
+            <field name="view_id" ref="stock.stock_picking_kanban"/>
+
+</record>
+      
+    </data>
+</odoo>

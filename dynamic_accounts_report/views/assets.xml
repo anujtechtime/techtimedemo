@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="assets_backend" inherit_id="web.assets_backend" name="your_module assets">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/dynamic_accounts_report/static/src/js/action_manager.js"></script>
+            <script type="text/javascript" src="/dynamic_accounts_report/static/src/js/general_ledger.js"></script>
+            <script type="text/javascript" src="/dynamic_accounts_report/static/src/js/trial_balance.js"></script>
+            <script type="text/javascript" src="/dynamic_accounts_report/static/src/js/cash_flow.js"></script>
+            <script type="text/javascript" src="/dynamic_accounts_report/static/src/js/financial_reports.js"></script>
+            <script type="text/javascript" src="/dynamic_accounts_report/static/src/js/partner_ledger.js"></script>
+            <script type="text/javascript" src="/dynamic_accounts_report/static/src/js/ageing.js"></script>
+            <script type="text/javascript" src="/dynamic_accounts_report/static/src/js/daybook.js"></script>
+        </xpath>
+    </template>
+</odoo>
