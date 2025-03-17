@@ -564,7 +564,7 @@ class IrActionsReport(models.Model):
                     'QUOTATION #{{docs.display_name}}' : "QUOTATION #" +  docs.display_name,
                     'Date: {{docs.date_order}}' : "Date : " + docs.date_order.strftime("%Y-%m-%d %H:%M:%S"),
                     '{{number_inv}}' : docs.number_inv,
-                    'Expiry Date: {{docs.validity_date}}' : "Expiry Date:" + docs.validity_date.date().strftime("%Y-%m-%d"),
+                    'Expiry Date: {{docs.validity_date}}' : "Expiry Date:" + docs.validity_date.strftime("%Y-%m-%d"),
                     "{{docs.amount_total}}" : docs.amount_total,
                     "RFQ: {{docs.custumer_po_number}}" : "RFQ: " + custumer_po_number
                     # "{{docs.order_line.product_id.display_name}}" : docs.order_line.product_id.display_name
