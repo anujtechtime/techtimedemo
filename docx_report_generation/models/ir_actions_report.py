@@ -555,15 +555,16 @@ class IrActionsReport(models.Model):
                     custumer_po_number = str(docs.custumer_req_number)
 
                 placeholder_mapping = {
-                    '{{docs.partner_id.display_name}}' : docs.partner_id.display_name,  # Replace with your actual field name
+                    'Quotation No.: {{docs.display_name}}' : "Quotation No.: " + docs.display_name,  # Replace with your actual field name
                     '{{docs.partner_id.state_id.name}}' : docs.partner_id.state_id.name,
+                    'Ship To:  {{docs.partner_id.display_name}}' : "Ship To:" + docs.partner_id.display_name,
                     '{{docs.partner_id.country_id.name}}' : docs.partner_id.country_id.name,
                     '{{docs.validity_date}}' : docs.validity_date,
-                    '{{docs.currency_id.name}}' : docs.currency_id.name,
+                    'Order Currency: {{docs.currency_id.name}}' : "Order Currency: " + docs.currency_id.name,
                     'QUOTATION #{{docs.display_name}}' : "QUOTATION #" +  docs.display_name,
-                    '{{docs.date_order}}' : docs.date_order,
+                    'Date: {{docs.date_order}}' : "Date : " + docs.date_order.strftime("%Y-%m-%d %H:%M:%S"),
                     '{{number_inv}}' : docs.number_inv,
-                    # 'Quotation Validity: {{docs.validity_date}}' : "Quotation Validity:" + docs.validity_date.date(),
+                    'Expiry Date: {{docs.validity_date}}' : "Expiry Date:" + docs.validity_date.date().strftime("%Y-%m-%d"),
                     "{{docs.amount_total}}" : docs.amount_total,
                     "RFQ: {{docs.custumer_po_number}}" : "RFQ: " + custumer_po_number
                     # "{{docs.order_line.product_id.display_name}}" : docs.order_line.product_id.display_name
