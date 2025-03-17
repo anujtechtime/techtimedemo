@@ -183,7 +183,8 @@ class SafeerInvoice(models.Model):
     _inherit = "account.move"
 
     custumer_po_number = fields.Char(string="Customer PO")  
-    requested_costumer = fields.Many2one("res.partner",string="Requested Customer")      
+    requested_costumer = fields.Many2one("res.partner",string="Requested Customer")  
+    agreement_no = fields.Char(string="Agreement No.")     
 
 class SaleAdvancePaymentInvSafeer(models.TransientModel):
     _inherit = "sale.advance.payment.inv"
