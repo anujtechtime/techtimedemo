@@ -47,3 +47,13 @@ class sama_almarbad_contract(models.Model):
         ('payment', 'صرف')], string='Contract/Tender',
         copy=False, default='invitation', tracking=True,
         help="* Choose The one among Contract and Tender")
+
+
+    def action_bit(self):
+        self.state = 'bid'
+
+    def action_contract(self):
+        self.state = 'contract'
+        
+    def action_payment(self):
+        self.state = 'payment'
