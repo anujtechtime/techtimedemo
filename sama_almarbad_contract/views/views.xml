@@ -1,0 +1,164 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+<!--
+    <record model="ir.ui.view" id="sama_almarbad_contract.list">
+      <field name="name">sama_almarbad_contract list</field>
+      <field name="model">sama_almarbad_contract.sama_almarbad_contract</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+-->
+
+
+<record model="ir.ui.view" id="contract_tender_tree">
+          <field name="name">Certificate </field>
+          <field name="model">contract.tender</field>
+          <field name="arch" type="xml">
+            <tree>
+                <field name="contract_tender"/>
+                <field name="name"/>
+                <field name="number"/>
+                <field name="date"/>
+                <field name="estimated_cost" attrs="{'readonly': [('state', 'not in', ['invitation'])]}"/>
+                <field name="proposed_cost" attrs="{'readonly': [('state', 'not in', ['bid'])]}"/>
+                <field name="contract_number" attrs="{'readonly': [('state', 'not in', ['contract'])]}"/>
+                <field name="approved_cost" attrs="{'readonly': [('state', 'not in', ['contract'])]}"/>
+                <field name="received_payment" attrs="{'invisible': [('state', 'not in', ['contract'])]}"/>
+                <field name="remaining_amount" attrs="{'invisible': [('state', 'not in', ['contract'])]}"/>
+            </tree>
+          </field>
+        </record>
+
+        <!-- <record id="view_contract_tender_filter" model="ir.ui.view">
+            <field name="name">almacontract.tenderaqal.grade.select</field>
+            <field name="model">contract.tender</field>
+            <field name="arch" type="xml">
+                <search string="Search Procurement">
+                    <field name="student_name_in_english"/>
+                        <field name="student_name_in_arabic"/>
+                    <field name="exam_number_for_reference"/>
+                </search>
+            </field>
+        </record> -->
+
+        <record model="ir.ui.view" id="contract_tender_kanban_view">
+            <field name="name">contract.tender.kanban</field>
+            <field name="model">contract.tender</field>
+            <field name="arch" type="xml">
+                <kanban class="o_res_partner_kanban">
+                    <field name="contract_tender"/>
+                    <field name="name"/>
+                    <field name="number"/>
+                    <field name="date"/>
+                    <field name="estimated_cost" attrs="{'readonly': [('state', 'not in', ['invitation'])]}"/>
+                    <field name="proposed_cost" attrs="{'readonly': [('state', 'not in', ['bid'])]}"/>
+                    <field name="contract_number" attrs="{'readonly': [('state', 'not in', ['contract'])]}"/>
+                    <field name="approved_cost" attrs="{'readonly': [('state', 'not in', ['contract'])]}"/>
+                    <field name="received_payment" attrs="{'invisible': [('state', 'not in', ['contract'])]}"/>
+                    <field name="remaining_amount" attrs="{'invisible': [('state', 'not in', ['contract'])]}"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click o_kanban_record_has_image_fill o_res_partner_kanban"> 
+                                <div class="oe_kanban_details">
+
+<!-- 
+                                    <div class="float-right" t-if="record.tags.raw_value == 'Arabic No Grade'">
+                                        <span class="fa fa-circle text-success" role="img" aria-label="File" title="File" name="tags"/>
+                                    </div>
+                                    <div class="float-right" t-if="record.tags.raw_value == 'Arabic With Grade'">
+                                        <span class="fa fa-circle text-danger" role="img" aria-label="nofile" title="nofile" name="tags_2"/>
+                                    </div>
+ -->
+                                    <strong class="o_kanban_record_title oe_partner_heading"><field name="contract_tender"/></strong>
+                                    <div class="o_kanban_tags_section oe_kanban_partner_categories"/>
+                                    <ul>
+                                        <li t-if="record.name.raw_value"><field name="name"/></li>
+                                        <li t-if="record.number.raw_value"><field name="number"/></li>
+                                        <li t-if="record.college_in_english.raw_value"><field name="college_in_english"/></li>
+                                        <li t-if="record.date.raw_value"><field name="date"/></li>
+                                        <li t-if="record.received_payment.raw_value"><field name="received_payment"/></li>
+                                        <li t-if="record.remaining_amount.raw_value"><field name="remaining_amount"/></li>
+                                    </ul>
+                                    <!-- <div class="oe_kanban_partner_links"/> -->
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+
+        
+
+        
+
+        <record model="ir.ui.view" id="view_any_name_form_contract_tender_t">
+        <field name="name">Cartificate</field>
+        <field name="model">contract.tender</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Certificate">
+                <header>
+                    <field name="Status" widget="statusbar" statusbar_visible="invitation,bid,contract,payment"/>
+                    <!-- <field name="state" widget="statusbar" statusbar_visible="draft,sent,sale"/> -->
+                </header>
+                <sheet>
+                <group>
+                    <group>
+                      <field name="contract_tender"/>
+                      <field name="name"/>
+                      <field name="number"/>
+                      <field name="date"/>
+                    </group>
+                    <group>
+                      <field name="estimated_cost" attrs="{'readonly': [('state', 'not in', ['invitation'])]}"/>
+                      <field name="proposed_cost" attrs="{'readonly': [('state', 'not in', ['bid'])]}"/>
+                      <field name="contract_number" attrs="{'readonly': [('state', 'not in', ['contract'])]}"/>
+                      <field name="approved_cost" attrs="{'readonly': [('state', 'not in', ['contract'])]}"/>
+                      <field name="received_payment" attrs="{'invisible': [('state', 'not in', ['payment'])]}"/>
+                      <field name="remaining_amount" attrs="{'invisible': [('state', 'not in', ['payment'])]}"/>
+                    </group>
+                </group>
+            </sheet>
+            </form>
+        </field>
+    </record>
+
+
+        <record model="ir.actions.act_window" id="contract_tender_tree_action_windownew_work">
+          <field name="name">Certificate </field>
+          <field name="type">ir.actions.act_window</field>
+          <field name="res_model">contract.tender</field>
+          <field name="view_mode">kanban,tree,form</field>
+        </record>
+        
+        <record id="action_certificate_form_view2" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_any_name_form_contract_tender_t"/>
+            <field name="act_window_id" ref="contract_tender_tree_action_windownew_work"/>
+        </record>
+        <record id="action_certificate_form_view1" model="ir.actions.act_window.view">
+            <field eval="0" name="sequence"/>
+            <field name="view_mode">kanban</field>
+            <field name="view_id" ref="contract_tender_kanban_view"/>
+            <field name="act_window_id" ref="contract_tender_tree_action_windownew_work"/>
+        </record>
+        <record id="action_certificate_tree_view1" model="ir.actions.act_window.view">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="contract_tender_tree"/>
+            <field name="act_window_id" ref="contract_tender_tree_action_windownew_work"/>
+        </record>
+
+        <menuitem name="Certificate " id="aktco_sale_menu_1_list_dst_contract_tender"
+              action="sama_almarbad_contract.contract_tender_tree_action_windownew_work"/>  
+  </data>
+</odoo>
