@@ -108,7 +108,7 @@
         <field name="arch" type="xml">
             <form string="Certificate">
                 <header>
-                    <field name="Status" widget="statusbar" statusbar_visible="invitation,bid,contract,payment"/>
+                    <field name="state" widget="statusbar" statusbar_visible="invitation,bid,contract,payment"/>
                     <!-- <field name="state" widget="statusbar" statusbar_visible="draft,sent,sale"/> -->
                 </header>
                 <sheet>
