@@ -83,7 +83,6 @@
                                     <ul>
                                         <li t-if="record.name.raw_value"><field name="name"/></li>
                                         <li t-if="record.number.raw_value"><field name="number"/></li>
-                                        <li t-if="record.college_in_english.raw_value"><field name="college_in_english"/></li>
                                         <li t-if="record.date.raw_value"><field name="date"/></li>
                                         <li t-if="record.received_payment.raw_value"><field name="received_payment"/></li>
                                         <li t-if="record.remaining_amount.raw_value"><field name="remaining_amount"/></li>
