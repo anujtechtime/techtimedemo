@@ -21,10 +21,12 @@
           <field name="model">contract.tender</field>
           <field name="arch" type="xml">
             <tree>
+
                 <field name="contract_tender"/>
                 <field name="name"/>
                 <field name="number"/>
                 <field name="date"/>
+                <field name="state"/>
                 <field name="estimated_cost" attrs="{'readonly': [('state', 'not in', ['invitation'])]}"/>
                 <field name="proposed_cost" attrs="{'readonly': [('state', 'not in', ['bid'])]}"/>
                 <field name="contract_number" attrs="{'readonly': [('state', 'not in', ['contract'])]}"/>
@@ -56,12 +58,13 @@
                     <field name="name"/>
                     <field name="number"/>
                     <field name="date"/>
-                    <field name="estimated_cost" attrs="{'readonly': [('state', 'not in', ['invitation'])]}"/>
-                    <field name="proposed_cost" attrs="{'readonly': [('state', 'not in', ['bid'])]}"/>
-                    <field name="contract_number" attrs="{'readonly': [('state', 'not in', ['contract'])]}"/>
-                    <field name="approved_cost" attrs="{'readonly': [('state', 'not in', ['contract'])]}"/>
-                    <field name="received_payment" attrs="{'invisible': [('state', 'not in', ['contract'])]}"/>
-                    <field name="remaining_amount" attrs="{'invisible': [('state', 'not in', ['contract'])]}"/>
+                    <field name="state"/>
+                    <field name="estimated_cost"/>
+                    <field name="proposed_cost"/>
+                    <field name="contract_number"/>
+                    <field name="approved_cost"/>
+                    <field name="received_payment"/>
+                    <field name="remaining_amount"/>
                     <templates>
                         <t t-name="kanban-box">
                             <div class="oe_kanban_global_click o_kanban_record_has_image_fill o_res_partner_kanban"> 
