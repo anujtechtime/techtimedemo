@@ -160,7 +160,7 @@
             <field name="act_window_id" ref="contract_tender_tree_action_windownew_work"/>
         </record>
 
-        <menuitem name="Certificate " id="aktco_sale_menu_1_list_dst_contract_tender"
+        <menuitem name="Contract " id="aktco_sale_menu_1_list_dst_contract_tender"
               action="sama_almarbad_contract.contract_tender_tree_action_windownew_work"/>  
   </data>
 </odoo>
