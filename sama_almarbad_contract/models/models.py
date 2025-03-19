@@ -45,7 +45,7 @@ class sama_almarbad_contract(models.Model):
         ('bid', 'عطاء'),
         ('contract', 'عقد'),
         ('payment', 'صرف')], string='Contract/Tender',
-        copy=False, default='invitation', tracking=True,
+        copy=False, default='tender', tracking=True,
         help="* Choose The one among Contract and Tender")
 
 
