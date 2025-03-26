@@ -852,6 +852,94 @@ class IrActionsReport(models.Model):
                 
                 doc.save(docx_content)  
 
+            if model_name == "contract.tender": 
+                odoo_data = self.env['contract.tender'].browse(int(data.get('doc_ids')[0]))
+
+                rows_added = len(data)
+
+
+                # shift_rows_down(ws, end_row, rows_added)
+
+            
+                docs = odoo_data
+
+                placeholder_mapping = {
+                    "{{contract_tender}}" : docs.contract_tender, 
+                    "{{state}}" : docs.state, 
+                    "{{name}}" : docs.name, 
+                    "{{number}}" : docs.number, 
+                    "{{date}}" : docs.date, 
+                    "{{estimated_cost}}" : docs.estimated_cost, 
+                    "{{proposed_cost}}" : docs.proposed_cost, 
+                    "{{contract_number}}" : docs.contract_number, 
+                    "{{approved_cost}}" : docs.approved_cost, 
+                    "{{received_payment}}" : docs.received_payment, 
+                    "{{remaining_amount}}" : docs.remaining_amount, 
+                }
+
+
+                # Iterate over cells and replace placeholders
+                for row in ws.iter_rows():
+                    for cell in row:
+                        if cell.value in placeholder_mapping:
+                            cell.value = placeholder_mapping[cell.value]
+
+                        # Function to find the cell address of a specific value
+                def find_marker(sheet, marker):
+                    for row in sheet.iter_rows():
+                        for cell in row:
+                            if cell.value == marker:
+                                return cell.coordinate
+                    return None
+
+                
+
+                def resize_image(image_path, max_width, max_height):
+                    img = PILImage.open(image_path)
+                    img.thumbnail((max_width, max_height), PILImage.LANCZOS)
+                    resized_image_path = "resized_" + image_path
+                    img.save(resized_image_path)
+                    return resized_image_path
+
+                def pixels_to_column_width(pixels):
+                    return (pixels - 12) / 7 + 1
+
+                # Function to convert pixels to Excel's row height units
+                def pixels_to_row_height(pixels):
+                    return pixels * 0.75
+
+                start_col = 2
+
+                # Define the table headers and data
+                
+
+                thin_border = Border(
+                    left=Side(style='thin'),
+                    right=Side(style='thin'),
+                    top=Side(style='thin'),
+                    bottom=Side(style='thin')
+                )
+
+                font_style = Font(size=12)
+
+
+                def decode_and_save_image(image_base64, filename):
+                    image_bytes = base64.b64decode(image_base64)
+                    with open(filename, 'wb') as image_file:
+                        image_file.write(image_bytes)
+
+                for row_num, row_data in enumerate(data, start=start_row):
+                    for col_num, cell_value in enumerate(row_data, start=start_col):
+                        cell = ws.cell(row=row_num, column=col_num, value=cell_value)
+                        cell.alignment = Alignment(horizontal='center', vertical='center')
+                        cell.border = thin_border
+                        cell.font = font_style 
+
+
+
+                # Merge cells for the specific format
+                doc.save(docx_content)      
+
             if model_name == "account.move":
 
                 odoo_data = self.env['account.move'].browse(int(data.get('doc_ids')[0]))
