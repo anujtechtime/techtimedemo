@@ -928,14 +928,6 @@ class IrActionsReport(models.Model):
                     with open(filename, 'wb') as image_file:
                         image_file.write(image_bytes)
 
-                for row_num, row_data in enumerate(data, start=start_row):
-                    for col_num, cell_value in enumerate(row_data, start=start_col):
-                        cell = ws.cell(row=row_num, column=col_num, value=cell_value)
-                        cell.alignment = Alignment(horizontal='center', vertical='center')
-                        cell.border = thin_border
-                        cell.font = font_style 
-
-
 
                 # Merge cells for the specific format
                 doc.save(docx_content)      
