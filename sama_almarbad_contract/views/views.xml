@@ -165,6 +165,42 @@
         </record>
 
         <menuitem name="Contract " id="aktco_sale_menu_1_list_dst_contract_tender"
-              action="sama_almarbad_contract.contract_tender_tree_action_windownew_work"/>  
+              action="sama_almarbad_contract.contract_tender_tree_action_windownew_work"/>
+
+    <report
+        id="contract_tender_custome_report"
+        model="contract.tender"
+        string="invitation"
+        report_type="qweb-pdf"
+        name="sama_almarbad_contract.contract_tender_report"
+        file="sama_almarbad_contract.contract_tender_report"
+    />
+
+    <report
+        id="contract_tender_custome_report_bid"
+        model="contract.tender"
+        string="Bid"
+        report_type="qweb-pdf"
+        name="sama_almarbad_contract.contract_tender_report_bid"
+        file="sama_almarbad_contract.contract_tender_report_bid"
+    />
+
+    <report
+        id="contract_tender_custome_report_contract"
+        model="contract.tender"
+        string="Contract"
+        report_type="qweb-pdf"
+        name="sama_almarbad_contract.contract_tender_report_contract"
+        file="sama_almarbad_contract.contract_tender_report_contract"
+    />
+
+    <report
+        id="contract_tender_custome_report_payment"
+        model="contract.tender"
+        string="Payment"
+        report_type="qweb-pdf"
+        name="sama_almarbad_contract.contract_tender_report_payment"
+        file="sama_almarbad_contract.contract_tender_report_payment"
+    />
   </data>
 </odoo>

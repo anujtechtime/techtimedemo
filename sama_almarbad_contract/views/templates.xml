@@ -1,5 +1,213 @@
 <odoo>
     <data>
+
+    <template id="contract_tender_report">
+    <t t-call="web.external_layout">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <div class="page">
+                <div class="row mt32 mb32" id="informations">
+                    <div class="col-12 text-center">
+                    <p>date: <t t-esc="doc.date"/></p>
+                    </div>
+                </div>
+                <div class="row mt32 mb32" id="informations">
+                    <div class="col-6 text-left">
+                    <p>contract/tender: <span t-field="doc.contract_tender"/></p>
+                    </div>
+                    <div class="col-6 text-left">
+                    <p>estimated cost: <t t-esc="doc.estimated_cost"/></p>
+                    </div>
+                </div>
+
+                <div class="row mt32 mb32" id="informations">
+                    <div class="col-12 text-left">
+                    <p>name: <t t-esc="doc.name"/> </p>
+                    </div>
+                </div>
+                <div class="row mt32 mb32" id="informations">
+                    <div class="col-12 text-left">
+                    <p>number: <t t-esc="doc.number"/> </p>
+                    </div>
+                </div>
+
+                <div class="row mt32 mb32" id="informations">
+                    <div class="col-12 text-left">
+                    Bank Information <br/>
+                    "To Be Paid To: SAMA AL MARBAD  FOR TRADING AND"<br/>
+                    GENERAL CONTRACTING AND GENERAL SERVICES AND MARINE SERVICES LTD <br/>
+                    Account number: 8000805105001<br/>
+                    Bank Name: BYBLOS BANK SAL IRAQ BASRA<br/>
+                    Order Currency: USD<br/>
+                    Swift Code: BYBAIQBA<br/>
+                    IBAN: IQ04BYBA003080510500100<br/>
+                    Address: IRAQ-BASRA<br/>
+                    </div>
+                </div>
+
+                </div>
+
+
+                
+
+            </t>
+        </t>
+        </t>
+    </template>
+
+
+    <template id="contract_tender_report_bid">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+            <div class="page">
+                <div class="row mt32 mb32" id="informations">
+                    <div class="col-12 text-center">
+                    <p>date: <t t-esc="doc.date"/></p>
+                    </div>
+                </div>
+                <div class="row mt32 mb32" id="informations">
+                    <div class="col-6 text-left">
+                    <p>contract/tender: <span t-field="doc.contract_tender"/></p>
+                    </div>
+                    <div class="col-6 text-left">
+                    <p>proposed cost: <t t-esc="doc.proposed_cost"/></p>
+                    </div>
+                </div>
+
+                <div class="row mt32 mb32" id="informations">
+                    <div class="col-12 text-left">
+                    <p>name: <t t-esc="doc.name"/> </p>
+                    </div>
+                </div>
+                <div class="row mt32 mb32" id="informations">
+                    <div class="col-12 text-left">
+                    <p>number: <t t-esc="doc.number"/> </p>
+                    </div>
+                </div>
+
+                <div class="row mt32 mb32" id="informations">
+                    <div class="col-12 text-left">
+                    Bank Information <br/>
+                    "To Be Paid To: SAMA AL MARBAD  FOR TRADING AND"<br/>
+                    GENERAL CONTRACTING AND GENERAL SERVICES AND MARINE SERVICES LTD <br/>
+                    Account number: 8000805105001<br/>
+                    Bank Name: BYBLOS BANK SAL IRAQ BASRA<br/>
+                    Order Currency: USD<br/>
+                    Swift Code: BYBAIQBA<br/>
+                    IBAN: IQ04BYBA003080510500100<br/>
+                    Address: IRAQ-BASRA<br/>
+                    </div>
+                </div>
+                </div>
+            </t>
+        </t>
+    </template>
+
+
+    <template id="contract_tender_report_contract">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+            <div class="row mt32 mb32" id="informations">
+                    <div class="col-12 text-center">
+                    <p>date: <t t-esc="doc.date"/></p>
+                    </div>
+                </div>
+                <div class="row mt32 mb32" id="informations">
+                    <div class="col-4 text-left">
+                    <p>contract/tender: <span t-field="doc.contract_tender"/></p>
+                    </div>
+                    <div class="col-4 text-center">
+                    <p>Contract Number: <t t-esc="doc.contract_number"/></p>
+                    </div>
+                    <div class="col-4 text-center">
+                    <p>estimated cost: <t t-esc="doc.estimated_cost"/></p>
+                    </div>
+                </div>
+
+                <div class="row mt32 mb32" id="informations">
+                    <div class="col-12 text-left">
+                    <p>name: <t t-esc="doc.name"/> </p>
+                    </div>
+                </div>
+                <div class="row mt32 mb32" id="informations">
+                    <div class="col-12 text-left">
+                    <p>number: <t t-esc="doc.number"/> </p>
+                    </div>
+                </div>
+
+                <div class="row mt32 mb32" id="informations">
+                    <div class="col-12 text-left">
+                    Bank Information <br/>
+                    "To Be Paid To: SAMA AL MARBAD  FOR TRADING AND"<br/>
+                    GENERAL CONTRACTING AND GENERAL SERVICES AND MARINE SERVICES LTD <br/>
+                    Account number: 8000805105001<br/>
+                    Bank Name: BYBLOS BANK SAL IRAQ BASRA<br/>
+                    Order Currency: USD<br/>
+                    Swift Code: BYBAIQBA<br/>
+                    IBAN: IQ04BYBA003080510500100<br/>
+                    Address: IRAQ-BASRA<br/>
+                    </div>
+                </div>
+                </div>
+            </t>
+        </t>
+    </template>
+
+
+    <template id="contract_tender_report_payment">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <div class="row mt32 mb32" id="informations">
+                    <div class="col-12 text-center">
+                    <p>date: <t t-esc="doc.date"/></p>
+                    </div>
+                </div>
+                <div class="row mt32 mb32" id="informations">
+                    <div class="col-4 text-left">
+                    <p>contract/tender: <span t-field="doc.contract_tender"/></p>
+                    </div>
+                    <div class="col-4 text-center">
+                    <p>Contract Number: <t t-esc="doc.contract_number"/></p>
+                    </div>
+                    <div class="col-4 text-center">
+                    <p>received payment: <t t-esc="doc.received_payment"/></p>
+                    </div>
+                </div>
+
+                <div class="row mt32 mb32" id="informations">
+                    <div class="col-6 text-left">
+                    <p>name: <t t-esc="doc.name"/> </p>
+                    </div>
+                    <div class="col-6 text-left">
+                    <p>remaining amount: <t t-esc="doc.remaining_amount"/></p>
+                    </div>                    
+                </div>
+                <div class="row mt32 mb32" id="informations">
+                    <div class="col-12 text-left">
+                    <p>number: <t t-esc="doc.number"/> </p>
+                    </div>
+                </div>
+
+                <div class="row mt32 mb32" id="informations">
+                    <div class="col-12 text-left">
+                    Bank Information <br/>
+                    "To Be Paid To: SAMA AL MARBAD  FOR TRADING AND"<br/>
+                    GENERAL CONTRACTING AND GENERAL SERVICES AND MARINE SERVICES LTD <br/>
+                    Account number: 8000805105001<br/>
+                    Bank Name: BYBLOS BANK SAL IRAQ BASRA<br/>
+                    Order Currency: USD<br/>
+                    Swift Code: BYBAIQBA<br/>
+                    IBAN: IQ04BYBA003080510500100<br/>
+                    Address: IRAQ-BASRA<br/>
+                    </div>
+                </div>
+                </div>
+
+
+            </t>
+        </t>
+    </template>
+
 <!--
         <template id="listing">
           <ul>
