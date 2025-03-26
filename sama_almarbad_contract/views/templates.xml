@@ -44,12 +44,19 @@
                     Address: IRAQ-BASRA<br/>
                     </div>
                 </div>
-
+                <div class="row mt32 mb32" id="informations">
+                    <div class="col-4 text-center">
+                    <p>Prepared by:</p>
+                    </div>
+                    <div class="col-4 text-center">
+                    <p>Checked by:</p>
+                    </div>
+                    <div class="col-4 text-center">
+                    <p>Approved by: <br/>Account Recievable</p>
+                    </div>
                 </div>
 
-
-                
-
+                </div>
             </t>
         </t>
         </t>
@@ -98,6 +105,19 @@
                     Address: IRAQ-BASRA<br/>
                     </div>
                 </div>
+                <div class="row mt32 mb32" id="informations">
+                    <div class="col-4 text-center">
+                    <p>Prepared by:</p>
+                    </div>
+                    <div class="col-4 text-center">
+                    <p>Checked by:</p>
+                    </div>
+                    <div class="col-4 text-center">
+                    <p>Approved by: <br/>Account Recievable</p>
+                    </div>
+                </div>
+
+
                 </div>
             </t>
         </t>
@@ -149,6 +169,18 @@
                     Address: IRAQ-BASRA<br/>
                     </div>
                 </div>
+                <div class="row mt32 mb32" id="informations">
+                    <div class="col-4 text-center">
+                    <p>Prepared by:</p>
+                    </div>
+                    <div class="col-4 text-center">
+                    <p>Checked by:</p>
+                    </div>
+                    <div class="col-4 text-center">
+                    <p>Approved by: <br/>Account Recievable</p>
+                    </div>
+                </div>
+
                 </div>
             </t>
         </t>
@@ -202,6 +234,17 @@
                     Swift Code: BYBAIQBA<br/>
                     IBAN: IQ04BYBA003080510500100<br/>
                     Address: IRAQ-BASRA<br/>
+                    </div>
+                </div>
+                <div class="row mt32 mb32" id="informations">
+                    <div class="col-4 text-center">
+                    <p>Prepared by:</p>
+                    </div>
+                    <div class="col-4 text-center">
+                    <p>Checked by:</p>
+                    </div>
+                    <div class="col-4 text-center">
+                    <p>Approved by: <br/>Account Recievable</p>
                     </div>
                 </div>
                 </div>
