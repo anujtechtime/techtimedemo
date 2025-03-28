@@ -16,6 +16,7 @@ class sama_almarbad_contract(models.Model):
     state = fields.Selection([
         ('invitation', 'دعوة'),
         ('bid', 'عطاء'),
+        ('referral','الإحالة'),
         ('contract', 'عقد'),
         ('payment', 'صرف')], string='Contract/Tender',
         copy=False, default='invitation', tracking=True,
@@ -27,8 +28,6 @@ class sama_almarbad_contract(models.Model):
     estimated_cost = fields.Float("Estimated Cost")
 
     proposed_cost = fields.Float("Proposed Cost")
-
-
 
     contract_number = fields.Char("Contract Number")
     approved_cost  = fields.Float("Estimated Cost")
@@ -43,6 +42,7 @@ class sama_almarbad_contract(models.Model):
     state_tender = fields.Selection([
         ('tender', 'مناقصة'),
         ('bid', 'عطاء'),
+        ('referral','الإحالة'),
         ('contract', 'عقد'),
         ('payment', 'صرف')], string='Contract/Tender',
         copy=False, default='tender', tracking=True,
