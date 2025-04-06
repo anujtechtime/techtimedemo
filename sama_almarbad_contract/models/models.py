@@ -57,3 +57,8 @@ class sama_almarbad_contract(models.Model):
         
     def action_payment(self):
         self.state = 'payment'
+
+    def action_referral(self):
+        self.state = 'referral'    
+
+        

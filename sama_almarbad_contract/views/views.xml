@@ -30,7 +30,7 @@
                 <field name="estimated_cost" attrs="{'readonly': [('state', 'not in', ['invitation'])]}"/>
                 <field name="proposed_cost" attrs="{'readonly': [('state', 'not in', ['bid'])]}"/>
                 <field name="contract_number" attrs="{'readonly': [('state', 'not in', ['contract'])]}"/>
-                <field name="approved_cost" attrs="{'readonly': [('state', 'not in', ['contract'])]}"/>
+                <field name="approved_cost" />
                 <field name="received_payment" attrs="{'invisible': [('state', 'not in', ['contract'])]}"/>
                 <field name="remaining_amount" attrs="{'invisible': [('state', 'not in', ['contract'])]}"/>
             </tree>
@@ -111,6 +111,7 @@
                     <button name="action_bit" string="Bit" type="object" attrs="{'invisible': [('state', 'not in', ['invitation',])]}"/>
                     <button name="action_contract" string="Contract" type="object" attrs="{'invisible': [('state', 'not in', ['bid'])]}"/>
                     <button name="action_payment" string="Payment" type="object" attrs="{'invisible': [('state', 'not in', ['contract'])]}"/>
+                    <button name="action_referral" string="Referral" type="object" attrs="{'invisible': [('state', 'not in', ['referral'])]}"/>
                     
                     <field name="state" widget="statusbar" statusbar_visible="invitation,bid,referral,contract,payment" attrs="{'invisible': [('contract_tender', 'in', ['tender'])]}"/>
                     <field name="state_tender" widget="statusbar" statusbar_visible="tender,bid,referral,contract,payment"  attrs="{'invisible': [('contract_tender', 'in', ['contract'])]}"/>
@@ -128,7 +129,7 @@
                       <field name="estimated_cost" attrs="{'readonly': [('state', 'not in', ['invitation'])]}"/>
                       <field name="proposed_cost" attrs="{'readonly': [('state', 'not in', ['bid'])]}"/>
                       <field name="contract_number" attrs="{'readonly': [('state', 'not in', ['contract'])]}"/>
-                      <field name="approved_cost" attrs="{'readonly': [('state', 'not in', ['contract'])]}"/>
+                      <field name="approved_cost" />
                       <field name="received_payment" attrs="{'invisible': [('state', 'not in', ['payment'])]}"/>
                       <field name="remaining_amount" attrs="{'invisible': [('state', 'not in', ['payment'])]}"/>
                     </group>
@@ -184,6 +185,15 @@
         report_type="qweb-pdf"
         name="sama_almarbad_contract.contract_tender_report_bid"
         file="sama_almarbad_contract.contract_tender_report_bid"
+    />
+
+    <report
+        id="contract_tender_custome_report_referral"
+        model="contract.tender"
+        string="Referral"
+        report_type="qweb-pdf"
+        name="sama_almarbad_contract.contract_tender_report_referral"
+        file="sama_almarbad_contract.contract_tender_report_referral"
     />
 
     <report
