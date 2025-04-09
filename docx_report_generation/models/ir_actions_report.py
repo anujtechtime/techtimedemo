@@ -720,13 +720,13 @@ class IrActionsReport(models.Model):
                     custumer_po_number = str(docs.custumer_po_number)
 
                 placeholder_mapping = {
-                    'To: {{docs.partner_id.display_name}}' : "To: " + docs.partner_id.display_name,  # Replace with your actual field name
-                    'Address: {{docs.partner_id.state_id.name}},{{docs.partner_id.country_id.name}}' : "Address: " + docs.partner_id.state_id.name + "," +docs.partner_id.country_id.name,
+                    'To: {{docs.partner_id.display_name}}' : "To: " + str(docs.partner_id.display_name),  # Replace with your actual field name
+                    'Address: {{docs.partner_id.state_id.name}},{{docs.partner_id.country_id.name}}' : "Address: " + str(docs.partner_id.state_id.name) + "," + str(docs.partner_id.country_id.name),
                     '{{docs.partner_id.country_id.name}}' : docs.partner_id.country_id.name,
-                    'DELIVERY NOTE #{{docs.display_name}}' : "DELIVERY NOTE #" +  docs.display_name,
+                    'DELIVERY NOTE #{{docs.display_name}}' : "DELIVERY NOTE #" +  str(docs.display_name),
                     # '{{docs.date_order}}' : docs.date_order,
                     # 'Quotation Validity: {{docs.validity_date}}' : "Quotation Validity:" + docs.validity_date.date(),
-                    "{{docs.scheduled_date.date()}}" : docs.scheduled_date.date(),
+                    "Date: {{docs.scheduled_date.date()}" : "Date: " + docs.scheduled_date.strftime("%Y-%m-%d"),
                     "PO No: {{docs.custumer_po_number}}" : "PO No: " + custumer_po_number
                     # "{{docs.order_line.product_id.display_name}}" : docs.order_line.product_id.display_name
                 }
