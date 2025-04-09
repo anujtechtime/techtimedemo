@@ -720,8 +720,8 @@ class IrActionsReport(models.Model):
                     custumer_po_number = str(docs.custumer_po_number)
 
                 placeholder_mapping = {
-                    '{{docs.partner_id.display_name}}' : docs.partner_id.display_name,  # Replace with your actual field name
-                    '{{docs.partner_id.state_id.name}}' : docs.partner_id.state_id.name,
+                    'To: {{docs.partner_id.display_name}}' : "To: " + docs.partner_id.display_name,  # Replace with your actual field name
+                    'Address: {{docs.partner_id.state_id.name}},{{docs.partner_id.country_id.name}}' : "Address: " + docs.partner_id.state_id.name + "," +docs.partner_id.country_id.name,
                     '{{docs.partner_id.country_id.name}}' : docs.partner_id.country_id.name,
                     'DELIVERY NOTE #{{docs.display_name}}' : "DELIVERY NOTE #" +  docs.display_name,
                     # '{{docs.date_order}}' : docs.date_order,
@@ -856,11 +856,7 @@ class IrActionsReport(models.Model):
                 odoo_data = self.env['contract.tender'].browse(int(data.get('doc_ids')[0]))
 
                 rows_added = len(data)
-
-
                 # shift_rows_down(ws, end_row, rows_added)
-
-            
                 docs = odoo_data
 
                 placeholder_mapping = {

@@ -109,9 +109,9 @@
             <form string="Certificate">
                 <header>
                     <button name="action_bit" string="Bit" type="object" attrs="{'invisible': [('state', 'not in', ['invitation',])]}"/>
-                    <button name="action_contract" string="Contract" type="object" attrs="{'invisible': [('state', 'not in', ['bid'])]}"/>
+                    <button name="action_referral" string="Referral" type="object" attrs="{'invisible': [('state', 'not in', ['bid'])]}"/>
+                    <button name="action_contract" string="Contract" type="object" attrs="{'invisible': [('state', 'not in', ['referral'])]}"/>
                     <button name="action_payment" string="Payment" type="object" attrs="{'invisible': [('state', 'not in', ['contract'])]}"/>
-                    <button name="action_referral" string="Referral" type="object" attrs="{'invisible': [('state', 'not in', ['referral'])]}"/>
                     
                     <field name="state" widget="statusbar" statusbar_visible="invitation,bid,referral,contract,payment" attrs="{'invisible': [('contract_tender', 'in', ['tender'])]}"/>
                     <field name="state_tender" widget="statusbar" statusbar_visible="tender,bid,referral,contract,payment"  attrs="{'invisible': [('contract_tender', 'in', ['contract'])]}"/>
