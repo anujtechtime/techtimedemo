@@ -6,8 +6,8 @@ from datetime import datetime
 class SamaaSo(models.Model):
     _inherit = "account.move"
 
-    section = fields.Selection([('option1','المصفى'),('option2','ام قصر')], string="Sectiomn")
-    sub_section = fields.Selection([('ST','ST'),('OF','OF'),('SB','SB'),('BN','BN'),('WS','WS')], string="Sub Sectiomn")
+    section = fields.Selection([('option1','المصفى'),('option2','ام قصر')], string="Section")
+    sub_section = fields.Selection([('ST','ST'),('OF','OF'),('SB','SB'),('BN','BN'),('WS','WS')], string="Sub Section")
 
     sequence = fields.Char("Sequence")
 
