@@ -32,7 +32,20 @@ class SamaaSo(models.Model):
         return res 
 
 
+class StockMoveInh(models.Model):
+    _inherit = 'stock.move'
 
+    sale_price_unit = fields.Float(string='Sale Price Unit')
+
+
+class SaleOrderLineIn(models.Model):
+    _inherit = 'sale.order.line'
+
+    def _prepare_stock_moves(self, picking):
+        res = super(SaleOrderLineIn, self)._prepare_stock_moves(picking)
+        for move in res:
+            move['sale_price_unit'] = self.price_unit
+        return res
 
 # class sama_invoice(models.Model):
 #     _name = 'sama_invoice.sama_invoice'
