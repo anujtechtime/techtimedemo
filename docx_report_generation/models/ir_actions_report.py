@@ -961,7 +961,7 @@ class IrActionsReport(models.Model):
                     # "RFQ: {{docs.custumer_po_number}}" : "RFQ: " +  custumer_po_number,
                     "PO NO.: {{docs.custumer_po_number}}" : "PO No.: " + custumer_po_number,
                     "Payment Term: {{payment_method}} " : "Payment Term:" + payment_method,
-                    "Agreement No.:  {{agreement_no}}" : "Agreement No.:" + docs.agreement_no,
+                    "Agreement No.:  {{agreement_no}}" : "Agreement No.:" + docs.agreement_no if docs.agreement_no else "",
 
                     # 'Quotation Validity: {{docs.validity_date}}' : "Quotation Validity:" + docs.validity_date.date(),
                     # "{{docs.order_line.product_id.display_name}}" : docs.order_line.product_id.display_name
