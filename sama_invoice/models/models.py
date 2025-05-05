@@ -32,33 +32,57 @@ class SamaaSoSD(models.Model):
         return res 
     
 
-    @api.onchange('invoice_ids')
-    def _onchange_invoice_ids(self):
-        if self.invoice_count == 1:
-            for inv in self.invoice_ids:  
-                inv.sequence = self.sequence
+    # def action_confirm(self):
+    #     res = super(SamaaSoSD, self).action_confirm()
+    #     if res.invoice_count == 1:
+    #         for inv in res.invoice_ids:  
+    #             inv.sequence = res.sequence
 
-        if self.invoice_count > 1:
-            for inv in self.invoice_ids:  
-                if not inv.sequence:
-                    if self.sub_section:
-                        # self.env['ir.config_parameter'].sudo().set_param('ST', '1')
-                        value = self.env['ir.config_parameter'].sudo().get_param(self.sub_section)
-                        inv.sequence = self.sub_section + " - " + value +" - " + str(datetime.now().year)
-                        value = str(int(value) + 1)
-                        self.env['ir.config_parameter'].sudo().set_param(self.sub_section, value)
+    #     if res.invoice_count > 1:
+    #         for inv in res.invoice_ids:  
+    #             if not inv.sequence:
+    #                 if res.sub_section:
+    #                     # self.env['ir.config_parameter'].sudo().set_param('ST', '1')
+    #                     value = self.env['ir.config_parameter'].sudo().get_param(res.sub_section)
+    #                     inv.sequence = res.sub_section + " - " + value +" - " + str(datetime.now().year)
+    #                     value = str(int(value) + 1)
+    #                     self.env['ir.config_parameter'].sudo().set_param(res.sub_section, value)
 
-                    if not self.sub_section:
-                        # self.env['ir.config_parameter'].sudo().set_param('ST', '1')
-                        value = self.env['ir.config_parameter'].sudo().get_param("SM")
-                        inv.sequence = "SM - " + value
-                        value = str(int(value) + 1)
-                        self.env['ir.config_parameter'].sudo().set_param("SM", value)
+    #                 if not res.sub_section:
+    #                     # self.env['ir.config_parameter'].sudo().set_param('ST', '1')
+    #                     value = self.env['ir.config_parameter'].sudo().get_param("SM")
+    #                     inv.sequence = "SM - " + value
+    #                     value = str(int(value) + 1)
+    #                     self.env['ir.config_parameter'].sudo().set_param("SM", value)
+    #     return res 
 
 class SamaaSo(models.Model):
     _inherit = "account.move"
 
     sequence = fields.Char("Sequence")
+
+
+    @api.model
+    def create(self, vals):
+        res = super(SamaaSo, self).create(vals)
+
+        if res.type == "out_invoice":
+            sale_order = self.env['sale.order'].search([("name","=",res.invoice_origin)])
+            if sale_order.sub_section:
+                # self.env['ir.config_parameter'].sudo().set_param('ST', '1')
+                value = self.env['ir.config_parameter'].sudo().get_param(sale_order.sub_section)
+                res.sequence = sale_order.sub_section + " - " + value +" - " + str(datetime.now().year)
+                value = str(int(value) + 1)
+                self.env['ir.config_parameter'].sudo().set_param(sale_order.sub_section, value)
+
+            if not sale_order.sub_section:
+                # self.env['ir.config_parameter'].sudo().set_param('ST', '1')
+                value = self.env['ir.config_parameter'].sudo().get_param("SM")
+                res.sequence = "SM - " + value
+                value = str(int(value) + 1)
+                self.env['ir.config_parameter'].sudo().set_param("SM", value)
+
+        return res 
 
 class StockMoveInh(models.Model):
     _inherit = 'stock.move'
