@@ -3,8 +3,8 @@
 from odoo import models, fields, api
 from datetime import datetime
 
-class SamaaSo(models.Model):
-    _inherit = "account.move"
+class SamaaSoSD(models.Model):
+    _inherit = "sale.order"
 
     section = fields.Selection([('option1','المصفى'),('option2','ام قصر')], string="Section")
     sub_section = fields.Selection([('ST','ST'),('OF','OF'),('SB','SB'),('BN','BN'),('WS','WS')], string="Sub Section")
@@ -13,7 +13,7 @@ class SamaaSo(models.Model):
 
     @api.model
     def create(self, vals):
-        res = super(SamaaSo, self).create(vals)
+        res = super(SamaaSoSD, self).create(vals)
 
         if res.sub_section:
             # self.env['ir.config_parameter'].sudo().set_param('ST', '1')
