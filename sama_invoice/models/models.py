@@ -30,7 +30,37 @@ class SamaaSoSD(models.Model):
             self.env['ir.config_parameter'].sudo().set_param("SM", value)
 
         return res 
+    
 
+    @api.onchange('invoice_count')
+    def _onchange_invoice_count(self):
+        res = super(SamaaSoSD, self).action_confirm()
+        if res.invoice_count == 1:
+            for inv in res.invoice_ids:  
+                inv.sequence = res.sequence
+
+        if res.invoice_count > 1:
+            for inv in res.invoice_ids:  
+                if not inv.sequence:
+                    if res.sub_section:
+                        # self.env['ir.config_parameter'].sudo().set_param('ST', '1')
+                        value = self.env['ir.config_parameter'].sudo().get_param(res.sub_section)
+                        inv.sequence = res.sub_section + " - " + value +" - " + str(datetime.now().year)
+                        value = str(int(value) + 1)
+                        self.env['ir.config_parameter'].sudo().set_param(res.sub_section, value)
+
+                    if not res.sub_section:
+                        # self.env['ir.config_parameter'].sudo().set_param('ST', '1')
+                        value = self.env['ir.config_parameter'].sudo().get_param("SM")
+                        inv.sequence = "SM - " + value
+                        value = str(int(value) + 1)
+                        self.env['ir.config_parameter'].sudo().set_param("SM", value)
+        return res 
+
+class SamaaSo(models.Model):
+    _inherit = "account.move"
+
+    sequence = fields.Char("Sequence")
 
 class StockMoveInh(models.Model):
     _inherit = 'stock.move'
