@@ -68,19 +68,23 @@ class SamaaSo(models.Model):
 
         if res.type == "out_invoice":
             sale_order = self.env['sale.order'].search([("name","=",res.invoice_origin)])
-            if sale_order.sub_section:
-                # self.env['ir.config_parameter'].sudo().set_param('ST', '1')
-                value = self.env['ir.config_parameter'].sudo().get_param(sale_order.sub_section)
-                res.sequence = sale_order.sub_section + " - " + value +" - " + str(datetime.now().year)
-                value = str(int(value) + 1)
-                self.env['ir.config_parameter'].sudo().set_param(sale_order.sub_section, value)
+            if sale_order.invoice_count == 1:
+                res.sequence = sale_order.sequence
 
-            if not sale_order.sub_section:
-                # self.env['ir.config_parameter'].sudo().set_param('ST', '1')
-                value = self.env['ir.config_parameter'].sudo().get_param("SM")
-                res.sequence = "SM - " + value
-                value = str(int(value) + 1)
-                self.env['ir.config_parameter'].sudo().set_param("SM", value)
+            if sale_order.invoice_count > 1:
+                if sale_order.sub_section:
+                    # self.env['ir.config_parameter'].sudo().set_param('ST', '1')
+                    value = self.env['ir.config_parameter'].sudo().get_param(sale_order.sub_section)
+                    res.sequence = sale_order.sub_section + " - " + value +" - " + str(datetime.now().year)
+                    value = str(int(value) + 1)
+                    self.env['ir.config_parameter'].sudo().set_param(sale_order.sub_section, value)
+
+                if not sale_order.sub_section:
+                    # self.env['ir.config_parameter'].sudo().set_param('ST', '1')
+                    value = self.env['ir.config_parameter'].sudo().get_param("SM")
+                    res.sequence = "SM - " + value
+                    value = str(int(value) + 1)
+                    self.env['ir.config_parameter'].sudo().set_param("SM", value)
 
         return res 
 
