@@ -968,6 +968,7 @@ class IrActionsReport(models.Model):
                 }
 
 
+
                 # Iterate over cells and replace placeholders
                 for row in ws.iter_rows():
                     for cell in row:
@@ -998,13 +999,14 @@ class IrActionsReport(models.Model):
                     # image_bytes = base64.b64decode(order.product_id.image_512)
                     # with open('image.png', 'wb') as image_file:
                     #     image_file.write(image_bytes)
+                    currency_rate = order.sale_line_ids.currency_rate1
                     data_m.append([
                         count,
                         order.product_id.display_name,
                         order.product_uom_id.display_name,
                         order.quantity,
-                        str(order.price_unit),
-                        docs.currency_id.symbol +  str(order.price_subtotal),
+                        str(order.price_unit / order.sale_line_ids.currency_rate1),
+                        "$" +  str(order.price_subtotal / order.sale_line_ids.currency_rate1),
                     ])
                     count = count + 1
                 print("data@@@@@@@@@@@@@@@@",data_m)    
@@ -1031,10 +1033,10 @@ class IrActionsReport(models.Model):
                 headers = ["Item No:", "Required Item", "Unit", "Qty", "Unit Price", "Amount"]
                 data = data_m + [
                     
-                    ["", "SUBTOTAL", "", "", "", docs.currency_id.symbol + str(docs.amount_total)],
+                    ["", "SUBTOTAL", "", "", "", "$" + str(docs.amount_total / currency_rate)],
                     ["", "3.3% W/H Tax:", "", "", "", ""],
                     ["", "LOGISTICS FEE", "", "", "", "Included"],
-                    ["", "TOTAL", "", "", "",  docs.currency_id.symbol + str(docs.amount_total)]
+                    ["", "TOTAL", "", "", "",  "$" + str(docs.amount_total / currency_rate)]
                 ]
 
                 thin_border = Border(
