@@ -6,6 +6,8 @@ from datetime import datetime
 class SamaaSoSD(models.Model):
     _inherit = "sale.order"
 
+    period = fields.Char("Period")
+
     section = fields.Selection([('option1','المصفى'),('option2','ام قصر')], string="Section")
     sub_section = fields.Selection([('ST','ST'),('OF','OF'),('SB','SB'),('BN','BN'),('WS','WS')], string="Sub Section")
 

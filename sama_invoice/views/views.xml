@@ -24,11 +24,12 @@
         <field name="section"/>
         <field name="sub_section"/>
         <field name="sequence"/>
+        <field name="period"/>
       </xpath>
     </field>
   </record>
 
-    <record model="ir.ui.view" id="view_any_name_account_move_form_seq">
+  <record model="ir.ui.view" id="view_any_name_account_move_form_seq">
     <field name="name">account.move.form</field>
     <field name="model">account.move</field>
     <field name="inherit_id" ref="account.view_move_form"/>
