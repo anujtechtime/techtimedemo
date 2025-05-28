@@ -950,7 +950,7 @@ class IrActionsReport(models.Model):
                 if docs.invoice_payment_term_id.id != 1:    
                     payment_method = "Payment Term"    
 
-                sale_order = self.env["sale.order"].search([('name','=',self.invoice_origin)])    
+                sale_order = self.env["sale.order"].search([('name','=',docs.invoice_origin)])    
 
                 
 
