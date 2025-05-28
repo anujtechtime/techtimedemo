@@ -950,6 +950,9 @@ class IrActionsReport(models.Model):
                 if docs.invoice_payment_term_id.id != 1:    
                     payment_method = "Payment Term"    
 
+                sale_order = self.env["sale.order"].search([('name','=',self.invoice_origin)])    
+
+                
 
                 placeholder_mapping = {
                     'To: {{docs.partner_id.display_name}}' : "To: " + docs.partner_id.display_name,  # Replace with your actual field name
@@ -958,6 +961,7 @@ class IrActionsReport(models.Model):
                     'Currency: {{docs.currency_id.name}}' : "Currency:" + docs.currency_id.name,
                     'Invoice No.: {{docs.display_name}}' : "Invoice No.: #" +  docs.display_name,
                     'Invoice Date: {{docs.invoice_date}}' : "Invoice Date:" + docs.invoice_date.strftime("%Y-%m-%d %H:%M:%S"),
+                    'Period:' : 'Period:' + sale_order.period,
                     # "RFQ: {{docs.custumer_po_number}}" : "RFQ: " +  custumer_po_number,
                     "PO NO.: {{docs.custumer_po_number}}" : "PO No.: " + custumer_po_number,
                     "Payment Term: {{payment_method}} " : "Payment Term:" + payment_method,
