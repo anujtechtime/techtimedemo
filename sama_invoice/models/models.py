@@ -13,6 +13,23 @@ class SamaaSoSD(models.Model):
 
     sequence = fields.Char("Sequence")
 
+    def unlink(self):
+        for res in self:
+            if res.sub_section:
+                # self.env['ir.config_parameter'].sudo().set_param('ST', '1')
+                value = self.env['ir.config_parameter'].sudo().get_param(res.sub_section)
+                res.sequence = res.sub_section + " - " + value +" - " + str(datetime.now().year)
+                value = str(int(value) - 1)
+                self.env['ir.config_parameter'].sudo().set_param(res.sub_section, value)
+
+            if not res.sub_section:
+                # self.env['ir.config_parameter'].sudo().set_param('ST', '1')
+                value = self.env['ir.config_parameter'].sudo().get_param("SM")
+                res.sequence = "SM - " + value
+                value = str(int(value) - 1)
+                self.env['ir.config_parameter'].sudo().set_param("SM", value)
+        return super(SamaaSoSD, self).unlink()
+
     @api.model
     def create(self, vals):
         res = super(SamaaSoSD, self).create(vals)
