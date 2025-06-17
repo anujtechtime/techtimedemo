@@ -127,6 +127,7 @@
                 <sheet>
                 <group>
                     <group>
+                      <field name="is_posted" invisible="1"/>
                       <field name="contract_tender"/>
                       <field name="name"/>
                       <field name="number"/>
