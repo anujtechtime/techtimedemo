@@ -108,6 +108,13 @@
         <field name="arch" type="xml">
             <form string="Certificate">
                 <header>
+                    <!-- XML Button -->
+                    <button name="action_post_entries"
+                            string="Post"
+                            type="object"
+                            class="btn-primary"
+                            attrs="{'invisible': [('is_posted', '=', True)]}" />
+
                     <button name="action_bit" string="Bit" type="object" attrs="{'invisible': [('state', 'not in', ['invitation',])]}"/>
                     <button name="action_referral" string="Referral" type="object" attrs="{'invisible': [('state', 'not in', ['bid'])]}"/>
                     <button name="action_contract" string="Contract" type="object" attrs="{'invisible': [('state', 'not in', ['referral'])]}"/>
