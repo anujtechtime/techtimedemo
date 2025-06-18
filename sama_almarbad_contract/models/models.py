@@ -56,8 +56,8 @@ class sama_almarbad_contract(models.Model):
     @api.model
     def _get_default_journal(self, type):
         journal_map = {
-            'received': 181,  # Receivable Journal
-            'payable': 491,   # Payable Journal
+            'received': 1,  # Receivable Journal
+            'payable': 1,   # Payable Journal
         }
         return self.env['account.journal'].browse(journal_map[type])
 
