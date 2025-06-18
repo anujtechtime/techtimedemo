@@ -76,7 +76,6 @@ class sama_almarbad_contract(models.Model):
                         'account_id': 359,
                         'name': 'Approved Value',
                         'debit': record.approved_cost,
-                        'analytic_account_id': record.analytic_account_id.id,
                     }),
                     (0, 0, {
                         'account_id': 354,
