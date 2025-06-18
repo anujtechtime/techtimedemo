@@ -49,7 +49,7 @@ class sama_almarbad_contract(models.Model):
         help="* Choose The one among Contract and Tender")
     
 
-    currency_id = fields.Many2one('res.currency', string="Currency")
+    currency_id = fields.Many2one('res.currency', string="Currency", required=True)
     analytic_account_id = fields.Many2one('account.analytic.account', string="Analytic Account", required=True)
     is_posted = fields.Boolean(string="Is Posted", default=False)
 
