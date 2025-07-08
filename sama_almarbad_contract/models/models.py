@@ -73,13 +73,13 @@ class sama_almarbad_contract(models.Model):
                 'journal_id': self._get_default_journal('payable').id,
                 'line_ids': [
                     (0, 0, {
-                        'account_id': 359,
+                        'account_id': 34,
                         'name': 'Approved Value',
                         'debit': record.approved_cost,
                         'analytic_account_id': record.analytic_account_id.id,
                     }),
                     (0, 0, {
-                        'account_id': 354,
+                        'account_id': 6,
                         'name': 'Approved Value',
                         'credit': record.approved_cost,
                     }),
@@ -92,7 +92,7 @@ class sama_almarbad_contract(models.Model):
                 'journal_id': self._get_default_journal('received').id,
                 'line_ids': [
                     (0, 0, {
-                        'account_id': 34,
+                        'account_id': 6,
                         'name': 'Received Payment',
                         'debit': record.received_payment,
                     }),
