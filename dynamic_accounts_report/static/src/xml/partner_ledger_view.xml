@@ -132,6 +132,17 @@
                             style="position: relative;height:30px;color:white;background-color: #00A0AD;border-color: #00A0AD; padding:3px;">
                         Export (XLSX)
                     </button>
+
+
+                    <button type="button" class="btn btn-primary" id="new_pdf"
+                            style="position: relative;height:30px;color:white;background-color: #00A0AD;border-color: #00A0AD; padding:3px;">
+                        New Print (PDF)
+                    </button>
+                    <button type="button" class="btn btn-primary" id="new_xlsx"
+                            style="position: relative;height:30px;color:white;background-color: #00A0AD;border-color: #00A0AD; padding:3px;">
+                        New Export (XLSX)
+                    </button>
+
                 </div>
             </div>
             <br></br>

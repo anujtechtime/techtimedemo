@@ -21,6 +21,8 @@ odoo.define('dynamic_accounts_report.partner_ledger', function (require) {
             'click #apply_filter': 'apply_filter',
             'click #pdf': 'print_pdf',
             'click #xlsx': 'print_xlsx',
+            'click #new_pdf': 'new_print_pdf',
+            'click #new_xlsx': 'new_print_xlsx',
             'click .pl-line': 'show_drop_down',
             'click .view-account-move': 'view_acc_move',
             'mousedown div.input-group.date[data-target-input="nearest"]': '_onCalendarIconClick',
@@ -188,8 +190,64 @@ odoo.define('dynamic_accounts_report.partner_ledger', function (require) {
         },
 
 
+        new_print_pdf: function(e) {
+            e.preventDefault();
+            var self = this;
+            self._rpc({
+                model: 'account.partner.ledger',
+                method: 'view_report',
+                args: [
+                    [self.wizard_id]
+                ],
+            }).then(function(data) {
+                var action = {
+                    'type': 'ir.actions.report',
+                    'report_type': 'qweb-pdf',
+                    'report_name': 'dynamic_accounts_report.new_partner_ledger',
+                    'report_file': 'dynamic_accounts_report.new_partner_ledger',
+                    'data': {
+                        'report_data': data
+                    },
+                    'context': {
+                        'active_model': 'account.partner.ledger',
+                        'landscape': 1,
+                        'partner_ledger_pdf_report': true
+                    },
+                    'display_name': 'Partner Ledger',
+                };
+                return self.do_action(action);
+            });
+        },
+
+
 
         print_xlsx: function() {
+            var self = this;
+            self._rpc({
+                model: 'account.partner.ledger',
+                method: 'view_report',
+                args: [
+                    [self.wizard_id]
+                ],
+            }).then(function(data) {
+                var action = {
+//                    'type': 'ir_actions_dynamic_xlsx_download',
+                    'data': {
+                         'model': 'account.partner.ledger',
+                         'options': JSON.stringify(data['filters']),
+                         'output_format': 'xlsx',
+                         'report_data': JSON.stringify(data['report_lines']),
+                         'report_name': 'Partner Ledger',
+                         'dfr_data': JSON.stringify(data),
+                    },
+                };
+//                return self.do_action(action);
+                   core.action_registry.map.t_b.prototype.downloadXlsx(action)
+            });
+        },
+
+
+        new_print_xlsx: function() {
             var self = this;
             self._rpc({
                 model: 'account.partner.ledger',
