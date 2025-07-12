@@ -251,10 +251,10 @@
                                     <!-- <th style="text-align:left;">Account</th>
                                     <th style="text-align:left;">Move</th>
                                     <th style="text-align:left;">Entry Label</th> -->
-                                    <th style="text-align:left;">Debit</th>
-                                    <th style="text-align:left;">Credit</th>
-                                    <th style="text-align:left;">Balance</th>
-                                    <th style="text-align:left;">Amount In Currency</th>
+                                    <th style="text-align:right;">Debit</th>
+                                    <th style="text-align:right;">Credit</th>
+                                    <th style="text-align:right;">Balance</th>
+                                    <th style="text-align:right;">Amount In Currency</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -281,7 +281,7 @@
                                         <span t-esc="account['balance']" t-options="{'widget': 'monetary', 'display_currency': env.company.currency_id}"/>
                                     </td>
                                     <td style="text-align:right;">
-                                        $<t t-esc="float_round(account['balance'] / 1310, precision_digits=2)"/>
+                                        $<t t-esc="float_round(float(account['balance']) / 1310, precision_digits=2)"/>
                                     </td>
                                     <td groups="base.group_multi_currency"/>
                                 </tr>
