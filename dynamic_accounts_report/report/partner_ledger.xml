@@ -254,6 +254,7 @@
                                     <th style="text-align:left;">Debit</th>
                                     <th style="text-align:left;">Credit</th>
                                     <th style="text-align:left;">Balance</th>
+                                    <th style="text-align:left;">Amount In Currency</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -278,6 +279,9 @@
                                     <td class="text-right">
                                         <t t-set="total_balance" t-value="total_balance + account['debit']"/>
                                         <span t-esc="account['balance']" t-options="{'widget': 'monetary', 'display_currency': env.company.currency_id}"/>
+                                    </td>
+                                    <td style="text-align:right;">
+                                        $<t t-esc="float_round(account['balance'] / 1310, precision_digits=2)"/>
                                     </td>
                                     <td groups="base.group_multi_currency"/>
                                 </tr>
