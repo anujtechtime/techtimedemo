@@ -92,9 +92,14 @@
                                     <th style="text-align:right;">Debit</th>
                                     <th style="text-align:right;">Credit</th>
                                     <th style="text-align:right;">Balance</th>
+                                    <th style="text-align:right;">Amount In Currency</th>
                             </tr>
                         </thead>
                         <tbody>
+                        <t t-set="total_debit" t-value="0"/>
+                        <t t-set="total_credit" t-value="0"/>
+                        <t t-set="total_balance" t-value="0"/>
+                        <t t-set="total_amount_curr" t-value="0"/>
                             <t t-foreach="account_data" t-as="account">
                                 <tr style="font-weight: bold;">
                                     <td colspan="5">
@@ -103,13 +108,22 @@
                                         <span t-esc="account['name']"/>
                                     </td>
                                     <td class="text-right">
+                                        <t t-set="total_debit" t-value="total_debit + account['debit']"/>
                                         <span t-esc="account['debit']" t-options="{'widget': 'monetary', 'display_currency': env.company.currency_id}"/>
                                     </td>
                                     <td class="text-right">
+                                        <t t-set="total_credit" t-value="total_credit + account['debit']"/>
                                         <span t-esc="account['credit']" t-options="{'widget': 'monetary', 'display_currency': env.company.currency_id}"/>
                                     </td>
                                     <td class="text-right">
+                                    <t t-set="total_balance" t-value="total_balance + account['debit']"/>
                                         <span t-esc="account['balance']" t-options="{'widget': 'monetary', 'display_currency': env.company.currency_id}"/>
+                                    </td>
+                                    <td style="text-align:right;">
+                                        <t t-if="account['balance']">
+                                            <t t-set="total_amount_curr" t-value="total_amount_curr + (account['balance'] / 1310)"/>
+                                            $<t t-esc="'{:.2f}'.format(account['balance'] / 1310)"/>
+                                        </t>
                                     </td>
                                     <td groups="base.group_multi_currency"/>
                                 </tr>
@@ -138,10 +152,40 @@
                                     </t> -->
                                 </tr>
                             </t>
+                            <tr>
+                                <td >
+                                    <span>Total</span>
+                                </td>
+                                <td style="text-align:right;">
+                                    <span t-esc="total_debit" t-options="{'widget': 'monetary', 'display_currency': env.company.currency_id}"/>
+                                </td>
+                                <td style="text-align:right;">
+                                    <span t-esc="total_credit" t-options="{'widget': 'monetary', 'display_currency': env.company.currency_id}"/>
+                                </td>
+                                <td style="text-align:right;">
+                                    <span t-esc="total_balance" t-options="{'widget': 'monetary', 'display_currency': env.company.currency_id}"/>
+                                </td>
+                                <td style="text-align:right;">
+                                    $<span t-esc="total_amount_curr" t-options="{'widget': 'monetary', 'display_currency': env.company.currency_id}"/>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                     </div>
                     <br></br>
+
+                    <div style="" class="row">
+                        <div class="col-6 text-center">
+                            <span>اسم المستلم :</span><br/>
+                            <span>توقيع المستلم:</span><br/>
+                            <span>التاريخ:</span>
+                        </div>
+                        <div class="col-6 text-center">
+                            <span>اسم المحاسب:</span><br/>
+                            <span>توقيع المحاسب : </span><br/>
+                            <span>التاريخ:</span>
+                        </div>
+                    </div>
                 </div>
             </t>
         </t>
@@ -154,12 +198,6 @@
             <field name="report_name">dynamic_accounts_report.partner_ledger</field>
             <field name="report_file">dynamic_accounts_report.partner_ledger</field>
     </record>
-
-
-
-
-
-
 
 
     <template id="dynamic_accounts_report.new_partner_ledger">

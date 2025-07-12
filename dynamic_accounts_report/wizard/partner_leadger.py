@@ -492,15 +492,14 @@ class PartnerView(models.TransientModel):
         sheet.write(row, col + 7, self.env.company.currency_id.symbol + str(total_balance), sub_heading_sub) 
         sheet.write(row, col + 8, "$" + str(round(total_amount_currecncy, 2)), sub_heading_sub) 
 
-        
-        sheet.write(row + 5, col + 1, ":المدير ", sub_heading_sub) 
-        sheet.write(row + 6, col + 1, ":توقيع المدير ", sub_heading_sub) 
-        sheet.write(row + 7, col + 1, ":التاريخ", sub_heading_sub) 
+        sheet.write(row + 5, col + 1, "اسم المستلم :", sub_heading_sub) 
+        sheet.write(row + 6, col + 1, "توقيع المستلم:", sub_heading_sub) 
+        sheet.write(row + 7, col + 1, "التاريخ:", sub_heading_sub) 
 
 
-        sheet.write(row + 5, col + 5, ":اسم المحاسب", sub_heading_sub) 
-        sheet.write(row + 6, col + 5, ":توقيع المحاسب ", sub_heading_sub) 
-        sheet.write(row + 7, col + 5, ":التاريخ ", sub_heading_sub) 
+        sheet.write(row + 5, col + 5, "اسم المحاسب:", sub_heading_sub) 
+        sheet.write(row + 6, col + 5, "توقيع المحاسب : ", sub_heading_sub) 
+        sheet.write(row + 7, col + 5, "التاريخ:", sub_heading_sub) 
 
         workbook.close()
         output.seek(0)
