@@ -297,7 +297,7 @@ class PartnerView(models.TransientModel):
 
         sql = ('''SELECT l.id AS lid,l.partner_id AS partner_id,m.id AS move_id, 
                     l.account_id AS account_id, l.date AS ldate, j.code AS lcode, l.currency_id, 
-                    l.amount_currency, l.ref AS lref, l.name AS lname, 
+                    l.amount_currency AS amountcurrency, l.ref AS lref, l.name AS lname, 
                     COALESCE(l.debit,0) AS debit, COALESCE(l.credit,0) AS credit, 
                     COALESCE(SUM(l.balance),0) AS balance,\
                     COALESCE(SUM(l.balance / 1310),0) AS lamountcurrency,
@@ -340,7 +340,7 @@ class PartnerView(models.TransientModel):
                 res['debit'] += round(line['debit'], 2)
                 res['credit'] += round(line['credit'], 2)
                 res['balance'] = round(line['balance'], 2)
-                res['amount_currecny'] = round(line['lamountcurrency'], 2)
+                res['amount_currecny'] = round(line['amountcurrency'], 2)
             if display_account == 'all':
                 partner_res.append(res)
             if display_account == 'movement' and res.get('move_lines'):
