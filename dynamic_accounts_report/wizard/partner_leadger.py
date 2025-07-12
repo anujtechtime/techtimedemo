@@ -601,7 +601,7 @@ class PartnerView(models.TransientModel):
             sheet.write(row, col + 5, self.env.company.currency_id.symbol + str(report['debit']), sub_heading_sub)
             sheet.write(row, col + 6, self.env.company.currency_id.symbol + str(report['credit']), sub_heading_sub)
             sheet.write(row, col + 7, self.env.company.currency_id.symbol + str(report['balance']), sub_heading_sub)
-            sheet.write(row, col + 7, self.env.company.currency_id.symbol + str(report['balance'] / 1310), sub_heading_sub)
+            sheet.write(row, col + 8, self.env.company.currency_id.symbol + str(report['balance'] / 1310), sub_heading_sub)
             # row += 1
             # sheet.write(row, col + 0, 'Date', cell_format)
             # sheet.write(row, col + 1, 'JRNL', cell_format)
