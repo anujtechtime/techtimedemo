@@ -510,6 +510,7 @@ class PartnerView(models.TransientModel):
         total_debit = 0
         total_credit = 0
         total_balance = 0
+        total_amount_currecncy = 0
 
         output = io.BytesIO()
         workbook = xlsxwriter.Workbook(output, {'in_memory': True})
@@ -573,6 +574,7 @@ class PartnerView(models.TransientModel):
         sheet.write('F5', 'Debit', cell_format)
         sheet.write('G5', 'Credit', cell_format)
         sheet.write('H5', 'Balance', cell_format)
+        sheet.write('I5', 'Amount In Currency', cell_format)
 
         row = 4
         col = 0
@@ -594,10 +596,12 @@ class PartnerView(models.TransientModel):
             total_debit = total_debit +  float(report['debit'])
             total_credit = total_credit +  float(report['credit'])
             total_balance = total_balance + float(report['balance'])
+            total_amount_currecncy = total_amount_currecncy + float(report['balance'] / 1310)
 
             sheet.write(row, col + 5, self.env.company.currency_id.symbol + str(report['debit']), sub_heading_sub)
             sheet.write(row, col + 6, self.env.company.currency_id.symbol + str(report['credit']), sub_heading_sub)
             sheet.write(row, col + 7, self.env.company.currency_id.symbol + str(report['balance']), sub_heading_sub)
+            sheet.write(row, col + 7, self.env.company.currency_id.symbol + str(report['balance'] / 1310), sub_heading_sub)
             # row += 1
             # sheet.write(row, col + 0, 'Date', cell_format)
             # sheet.write(row, col + 1, 'JRNL', cell_format)
@@ -622,7 +626,10 @@ class PartnerView(models.TransientModel):
                               sub_heading_sub)
         sheet.write(row, col + 5, self.env.company.currency_id.symbol + str(total_debit), sub_heading_sub)    
         sheet.write(row, col + 6, self.env.company.currency_id.symbol + str(total_credit), sub_heading_sub)    
-        sheet.write(row, col + 7, self.env.company.currency_id.symbol + str(total_balance), sub_heading_sub) 
+        sheet.write(row, col + 7, self.env.company.currency_id.symbol + str(total_balance), sub_heading_sub)
+        sheet.write(row, col + 8, self.env.company.currency_id.symbol + str(total_amount_currecncy), sub_heading_sub) 
+
+        
 
         sheet.write(row + 5, col + 1, ":المدير ", sub_heading_sub) 
         sheet.write(row + 6, col + 1, ":توقيع المدير ", sub_heading_sub) 
