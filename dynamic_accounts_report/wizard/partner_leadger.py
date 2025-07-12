@@ -479,9 +479,9 @@ class PartnerView(models.TransientModel):
                 sheet.write(row, col + 2, r_rec['account_name'], txt)
                 sheet.write(row, col + 3, r_rec['move_name'], txt)
                 sheet.write(row, col + 4, r_rec['lname'], txt)
-                sheet.write(row, col + 5, r_rec['debit'], txt)
-                sheet.write(row, col + 6, r_rec['credit'], txt)
-                sheet.write(row, col + 7, r_rec['balance'], txt)
+                sheet.write(row, col + 5, self.env.company.currency_id.symbol + str(r_rec['debit']), txt)
+                sheet.write(row, col + 6, self.env.company.currency_id.symbol + str(r_rec['credit']), txt)
+                sheet.write(row, col + 7, self.env.company.currency_id.symbol + str(r_rec['balance']), txt)
 
 
         row += 1
