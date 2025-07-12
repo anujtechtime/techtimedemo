@@ -282,7 +282,7 @@
                                     </td>
                                     <td style="text-align:right;">
                                         <t t-if="account['balance']">
-                                            $<t t-esc="float_round(float(account['balance']) / 1310, precision_digits=2)"/>
+                                            $<t t-esc="'{:.2f}'.format(account['balance'] / 1310)"/>
                                         </t>
                                     </td>
                                     <td groups="base.group_multi_currency"/>
