@@ -291,19 +291,19 @@
                                 </tr>
                             </t>
                             <tr>
-                                <td>
+                                <td >
                                     <span>Total</span>
                                 </td>
-                                <td>
+                                <td style="text-align:right;">
                                     <span t-esc="total_debit" t-options="{'widget': 'monetary', 'display_currency': env.company.currency_id}"/>
                                 </td>
-                                <td>
+                                <td style="text-align:right;">
                                     <span t-esc="total_credit" t-options="{'widget': 'monetary', 'display_currency': env.company.currency_id}"/>
                                 </td>
-                                <td>
+                                <td style="text-align:right;">
                                     <span t-esc="total_balance" t-options="{'widget': 'monetary', 'display_currency': env.company.currency_id}"/>
                                 </td>
-                                <td>
+                                <td style="text-align:right;">
                                     $<span t-esc="total_amount_curr" t-options="{'widget': 'monetary', 'display_currency': env.company.currency_id}"/>
                                 </td>
                             </tr>
@@ -315,13 +315,13 @@
 
                     <div style="" class="row">
                         <div class="col-6 text-center">
-                            <span>:المدير</span>
-                            <span>:توقيع المدير</span>
+                            <span>:المدير</span><br/>
+                            <span>:توقيع المدير</span><br/>
                             <span>:التاريخ</span>
                         </div>
                         <div class="col-6 text-center">
-                            <span>:اسم المحاسب</span>
-                            <span>:توقيع المحاسب </span>
+                            <span>:اسم المحاسب</span><br/>
+                            <span>:توقيع المحاسب </span><br/>
                             <span>:التاريخ</span>
                         </div>
                     </div>
