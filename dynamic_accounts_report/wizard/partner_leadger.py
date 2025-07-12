@@ -340,6 +340,7 @@ class PartnerView(models.TransientModel):
                 res['debit'] += round(line['debit'], 2)
                 res['credit'] += round(line['credit'], 2)
                 res['balance'] = round(line['balance'], 2)
+                res['amount_currecny'] = round(line['lamountcurrency'], 2)
             if display_account == 'all':
                 partner_res.append(res)
             if display_account == 'movement' and res.get('move_lines'):
@@ -366,6 +367,10 @@ class PartnerView(models.TransientModel):
     def get_dynamic_xlsx_report(self, data, response, report_data, dfr_data):
         report_data = json.loads(report_data)
         filters = json.loads(data)
+
+        total_debit = 0
+        total_credit = 0
+        total_balance = 0
 
         output = io.BytesIO()
         workbook = xlsxwriter.Workbook(output, {'in_memory': True})
@@ -447,6 +452,11 @@ class PartnerView(models.TransientModel):
             row += 1
             sheet.merge_range(row, col + 0, row, col + 4, report['name'],
                               sub_heading_sub)
+            total_debit = total_debit +  float(report['debit'])
+            total_credit = total_credit +  float(report['credit'])
+            total_balance = total_balance + float(report['balance'])
+
+
             sheet.write(row, col + 5, report['debit'], sub_heading_sub)
             sheet.write(row, col + 6, report['credit'], sub_heading_sub)
             sheet.write(row, col + 7, report['balance'], sub_heading_sub)
@@ -469,6 +479,159 @@ class PartnerView(models.TransientModel):
                 sheet.write(row, col + 5, r_rec['debit'], txt)
                 sheet.write(row, col + 6, r_rec['credit'], txt)
                 sheet.write(row, col + 7, r_rec['balance'], txt)
+
+
+        row += 1
+        sheet.merge_range(row, col + 0, row, col + 4, "Total",
+                              sub_heading_sub)
+        sheet.write(row, col + 5, total_debit, sub_heading_sub)    
+        sheet.write(row, col + 6, total_credit, sub_heading_sub)    
+        sheet.write(row, col + 7, total_balance, sub_heading_sub) 
+
+        
+        sheet.write(row + 5, col + 1, ":المدير ", sub_heading_sub) 
+        sheet.write(row + 6, col + 1, ":توقيع المدير ", sub_heading_sub) 
+        sheet.write(row + 7, col + 1, ":التاريخ", sub_heading_sub) 
+
+
+        sheet.write(row + 5, col + 5, ":اسم المحاسب", sub_heading_sub) 
+        sheet.write(row + 6, col + 5, ":توقيع المحاسب ", sub_heading_sub) 
+        sheet.write(row + 7, col + 5, ":التاريخ ", sub_heading_sub) 
+
+        workbook.close()
+        output.seek(0)
+        response.stream.write(output.read())
+        output.close()
+
+    def new_get_dynamic_xlsx_report(self, data, response, report_data, dfr_data):
+        report_data = json.loads(report_data)
+        filters = json.loads(data)
+
+        total_debit = 0
+        total_credit = 0
+        total_balance = 0
+
+        output = io.BytesIO()
+        workbook = xlsxwriter.Workbook(output, {'in_memory': True})
+        cell_format = workbook.add_format(
+            {'align': 'center', 'bold': True,
+             'border': 0
+             })
+        sheet = workbook.add_worksheet()
+        head = workbook.add_format({'align': 'center', 'bold': True,
+                                    'font_size': '20px'})
+
+        txt = workbook.add_format({'font_size': '10px', 'border': 1})
+        sub_heading_sub = workbook.add_format(
+            {'align': 'center', 'bold': True, 'font_size': '10px',
+             'border': 1,
+             'border_color': 'black'})
+        sheet.merge_range('A1:H2',
+                          filters.get('company_name') + ':' + 'Partner Ledger',
+                          head)
+        date_head = workbook.add_format({'align': 'center', 'bold': True,
+                                         'font_size': '10px'})
+
+        sheet.merge_range('A4:B4',
+                          'Target Moves: ' + filters.get('target_move'),
+                          date_head)
+
+        sheet.merge_range('C4:D4', 'Account Type: ' + ', ' .join(
+            [lt or '' for lt in
+             filters['account_type']]),
+                          date_head)
+        sheet.merge_range('E3:F3', ' Partners: ' + ', '.join(
+            [lt or '' for lt in
+             filters['partners']]), date_head)
+        sheet.merge_range('G3:H3', ' Partner Tags: ' + ', '.join(
+            [lt or '' for lt in
+             filters['partner_tags']]),
+                          date_head)
+        sheet.merge_range('A3:B3', ' Journals: ' + ', '.join(
+            [lt or '' for lt in
+             filters['journals']]),
+                          date_head)                  
+        sheet.merge_range('C3:D3', ' Accounts: ' + ', '.join(
+            [lt or '' for lt in
+             filters['accounts']]),
+                          date_head)
+
+        if filters.get('date_from') and filters.get('date_to'):
+            sheet.merge_range('E4:F4', 'From: ' + filters.get('date_from'),
+                              date_head)
+
+            sheet.merge_range('G4:H4', 'To: ' + filters.get('date_to'),
+                              date_head)
+        elif filters.get('date_from'):
+            sheet.merge_range('E4:F4', 'From: ' + filters.get('date_from'),
+                              date_head)
+        elif filters.get('date_to'):
+            sheet.merge_range('E4:F4', 'To: ' + filters.get('date_to'),
+                              date_head)
+
+        sheet.merge_range('A5:E5', 'Partner', cell_format)
+        sheet.write('F5', 'Debit', cell_format)
+        sheet.write('G5', 'Credit', cell_format)
+        sheet.write('H5', 'Balance', cell_format)
+
+        row = 4
+        col = 0
+
+        sheet.set_column(0, 0, 15)
+        sheet.set_column(1, 1, 15)
+        sheet.set_column(2, 2, 25)
+        sheet.set_column(3, 3, 15)
+        sheet.set_column(4, 4, 36)
+        sheet.set_column(5, 5, 15)
+        sheet.set_column(6, 6, 15)
+        sheet.set_column(7, 7, 15)
+
+        for report in report_data:
+
+            row += 1
+            sheet.merge_range(row, col + 0, row, col + 4, report['name'],
+                              sub_heading_sub)
+            total_debit = total_debit +  float(report['debit'])
+            total_credit = total_credit +  float(report['credit'])
+            total_balance = total_balance + float(report['balance'])
+
+            sheet.write(row, col + 5, self.env.company.currency_id.symbol + str(report['debit']), sub_heading_sub)
+            sheet.write(row, col + 6, self.env.company.currency_id.symbol + str(report['credit']), sub_heading_sub)
+            sheet.write(row, col + 7, self.env.company.currency_id.symbol + str(report['balance']), sub_heading_sub)
+            # row += 1
+            # sheet.write(row, col + 0, 'Date', cell_format)
+            # sheet.write(row, col + 1, 'JRNL', cell_format)
+            # sheet.write(row, col + 2, 'Account', cell_format)
+            # sheet.write(row, col + 3, 'Move', cell_format)
+            # sheet.write(row, col + 4, 'Entry Label', cell_format)
+            # sheet.write(row, col + 5, 'Debit', cell_format)
+            # sheet.write(row, col + 6, 'Credit', cell_format)
+            # sheet.write(row, col + 7, 'Balance', cell_format)
+            # for r_rec in report['move_lines']:
+            #     row += 1
+            #     sheet.write(row, col + 0, r_rec['ldate'], txt)
+            #     sheet.write(row, col + 1, r_rec['lcode'], txt)
+            #     sheet.write(row, col + 2, r_rec['account_name'], txt)
+            #     sheet.write(row, col + 3, r_rec['move_name'], txt)
+            #     sheet.write(row, col + 4, r_rec['lname'], txt)
+            #     sheet.write(row, col + 5, r_rec['debit'], txt)
+            #     sheet.write(row, col + 6, r_rec['credit'], txt)
+            #     sheet.write(row, col + 7, r_rec['balance'], txt)
+        row += 1
+        sheet.merge_range(row, col + 0, row, col + 4, "Total",
+                              sub_heading_sub)
+        sheet.write(row, col + 5, self.env.company.currency_id.symbol + str(total_debit), sub_heading_sub)    
+        sheet.write(row, col + 6, self.env.company.currency_id.symbol + str(total_credit), sub_heading_sub)    
+        sheet.write(row, col + 7, self.env.company.currency_id.symbol + str(total_balance), sub_heading_sub) 
+
+        sheet.write(row + 5, col + 1, ":المدير ", sub_heading_sub) 
+        sheet.write(row + 6, col + 1, ":توقيع المدير ", sub_heading_sub) 
+        sheet.write(row + 7, col + 1, ":التاريخ", sub_heading_sub) 
+
+
+        sheet.write(row + 5, col + 5, ":اسم المحاسب", sub_heading_sub) 
+        sheet.write(row + 6, col + 5, ":توقيع المحاسب ", sub_heading_sub) 
+        sheet.write(row + 7, col + 5, ":التاريخ ", sub_heading_sub) 
 
         workbook.close()
         output.seek(0)

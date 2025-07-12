@@ -9,6 +9,8 @@ odoo.define('dynamic_accounts_report.partner_ledger', function (require) {
     var QWeb = core.qweb;
     var _t = core._t;
 
+    var framework = require('web.framework');
+
     var datepicker = require('web.datepicker');
     var time = require('web.time');
 
@@ -26,7 +28,6 @@ odoo.define('dynamic_accounts_report.partner_ledger', function (require) {
             'click .pl-line': 'show_drop_down',
             'click .view-account-move': 'view_acc_move',
             'mousedown div.input-group.date[data-target-input="nearest"]': '_onCalendarIconClick',
-
         },
 
         init: function(parent, action) {
@@ -256,6 +257,7 @@ odoo.define('dynamic_accounts_report.partner_ledger', function (require) {
                     [self.wizard_id]
                 ],
             }).then(function(data) {
+                console.log("data['report_lines']22222222222",data['report_lines'])
                 var action = {
 //                    'type': 'ir_actions_dynamic_xlsx_download',
                     'data': {
@@ -263,12 +265,26 @@ odoo.define('dynamic_accounts_report.partner_ledger', function (require) {
                          'options': JSON.stringify(data['filters']),
                          'output_format': 'xlsx',
                          'report_data': JSON.stringify(data['report_lines']),
-                         'report_name': 'Partner Ledger',
+                         'report_name': 'Partner Ledger New',
                          'dfr_data': JSON.stringify(data),
                     },
                 };
 //                return self.do_action(action);
-                   core.action_registry.map.t_b.prototype.downloadXlsx(action)
+        //            core.action_registry.map.t_b.prototype.downloadXlsx(action)
+        //     });
+        // },
+
+        self.downloadXlsx(action);
+            });
+        },
+
+        downloadXlsx: function (action){
+        framework.blockUI();
+            session.get_file({
+                url: '/new_dynamic_xlsx_reports',
+                data: action.data,
+                complete: framework.unblockUI,
+                error: (error) => this.call('crash_manager', 'rpc_error', error),
             });
         },
 
