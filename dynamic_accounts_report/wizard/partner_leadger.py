@@ -459,9 +459,9 @@ class PartnerView(models.TransientModel):
             total_balance = total_balance + float(report['balance'])
             total_amount_currecncy = total_amount_currecncy + float(report['balance'] / 1310)
 
-            sheet.write(row, col + 5, self.env.company.currency_id.symbol + report['debit'], sub_heading_sub)
-            sheet.write(row, col + 6, self.env.company.currency_id.symbol + report['credit'], sub_heading_sub)
-            sheet.write(row, col + 7, self.env.company.currency_id.symbol + report['balance'], sub_heading_sub)
+            sheet.write(row, col + 5, self.env.company.currency_id.symbol + str(report['debit']), sub_heading_sub)
+            sheet.write(row, col + 6, self.env.company.currency_id.symbol + str(report['credit']), sub_heading_sub)
+            sheet.write(row, col + 7, self.env.company.currency_id.symbol + str(report['balance']), sub_heading_sub)
             sheet.write(row, col + 8, "$" + str(round(report['balance'] / 1310, 2) ), sub_heading_sub)
             row += 1
             sheet.write(row, col + 0, 'Date', cell_format)
@@ -487,9 +487,9 @@ class PartnerView(models.TransientModel):
         row += 1
         sheet.merge_range(row, col + 0, row, col + 4, "Total",
                               sub_heading_sub)
-        sheet.write(row, col + 5, self.env.company.currency_id.symbol + total_debit, sub_heading_sub)    
-        sheet.write(row, col + 6, self.env.company.currency_id.symbol + total_credit, sub_heading_sub)    
-        sheet.write(row, col + 7, self.env.company.currency_id.symbol + total_balance, sub_heading_sub) 
+        sheet.write(row, col + 5, self.env.company.currency_id.symbol + str(total_debit), sub_heading_sub)    
+        sheet.write(row, col + 6, self.env.company.currency_id.symbol + str(total_credit), sub_heading_sub)    
+        sheet.write(row, col + 7, self.env.company.currency_id.symbol + str(total_balance), sub_heading_sub) 
         sheet.write(row, col + 8, "$" + str(round(total_amount_currecncy, 2)), sub_heading_sub) 
 
         
