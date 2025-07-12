@@ -261,6 +261,7 @@
                         <t t-set="total_debit" t-value="0"/>
                         <t t-set="total_credit" t-value="0"/>
                         <t t-set="total_balance" t-value="0"/>
+                        <t t-set="total_amount_curr" t-value="0"/>
                             <t t-foreach="account_data" t-as="account">
                                 <tr style="font-weight: bold;">
                                     <td>
@@ -282,16 +283,48 @@
                                     </td>
                                     <td style="text-align:right;">
                                         <t t-if="account['balance']">
+                                            <t t-set="total_amount_curr" t-value="total_amount_curr + (account['balance'] / 1310)"/>
                                             $<t t-esc="'{:.2f}'.format(account['balance'] / 1310)"/>
                                         </t>
                                     </td>
                                     <td groups="base.group_multi_currency"/>
                                 </tr>
                             </t>
+                            <tr>
+                                <td>
+                                    <span>Total</span>
+                                </td>
+                                <td>
+                                    <span t-esc="total_debit" t-options="{'widget': 'monetary', 'display_currency': env.company.currency_id}"/>
+                                </td>
+                                <td>
+                                    <span t-esc="total_credit" t-options="{'widget': 'monetary', 'display_currency': env.company.currency_id}"/>
+                                </td>
+                                <td>
+                                    <span t-esc="total_balance" t-options="{'widget': 'monetary', 'display_currency': env.company.currency_id}"/>
+                                </td>
+                                <td>
+                                    $<span t-esc="total_amount_curr" t-options="{'widget': 'monetary', 'display_currency': env.company.currency_id}"/>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                     </div>
                     <br></br>
+
+
+                    <div style="" class="row">
+                        <div class="col-6 text-center">
+                            <span>:المدير</span>
+                            <span>:توقيع المدير</span>
+                            <span>:التاريخ</span>
+                        </div>
+                        <div class="col-6 text-center">
+                            <span>:اسم المحاسب</span>
+                            <span>:توقيع المحاسب </span>
+                            <span>:التاريخ</span>
+                        </div>
+                    </div>
                 </div>
             </t>
         </t>
