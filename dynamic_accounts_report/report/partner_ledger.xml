@@ -281,7 +281,9 @@
                                         <span t-esc="account['balance']" t-options="{'widget': 'monetary', 'display_currency': env.company.currency_id}"/>
                                     </td>
                                     <td style="text-align:right;">
-                                        $<t t-esc="float_round(float(account['balance']) / 1310, precision_digits=2)"/>
+                                        <t t-if="account['balance']">
+                                            $<t t-esc="float_round(float(account['balance']) / 1310, precision_digits=2)"/>
+                                        </t>
                                     </td>
                                     <td groups="base.group_multi_currency"/>
                                 </tr>
