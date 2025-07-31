@@ -144,7 +144,7 @@ class MrpProductWizard(models.TransientModel):
 
         # row = row + 1
 
-        worksheet.write_merge(rows , rows , col , col + 2 , "(total )المجموع ", main_cell_total)
+        worksheet.write_merge(row , row , col , col + 2 , "(total )المجموع ", main_cell_total)
 
         worksheet.write(row, 3, total_credit_converted, main_cell_total)
         worksheet.write(row, 4, total_debit_converted, main_cell_total)
@@ -153,20 +153,20 @@ class MrpProductWizard(models.TransientModel):
 
         row = row + 1
 
-        worksheet.write_merge(rows , rows , col , col + 3 , "مجموع مبالغ الهدايا المدفوعة الى الأقسام  ", main_cell_total)
+        worksheet.write_merge(row , row , col , col + 3 , "مجموع مبالغ الهدايا المدفوعة الى الأقسام  ", main_cell_total)
         
         row = row + 1
 
-        worksheet.write_merge(rows , rows , col , col + 3 , "مجموع المصاريف بسعر صرف1420 ", main_cell_total)
+        worksheet.write_merge(row , row , col , col + 3 , "مجموع المصاريف بسعر صرف1420 ", main_cell_total)
         
         row = row + 1
 
-        worksheet.write_merge(rows , rows , col , col + 3 , "صافي الربح الكلي بأسعار الصرف المختلفة  ", main_cell_total)
+        worksheet.write_merge(row , row , col , col + 3 , "صافي الربح الكلي بأسعار الصرف المختلفة  ", main_cell_total)
         worksheet.write(row, 4, total_sum, main_cell_total)
 
         row = row + 1
 
-        worksheet.write_merge(rows , rows , col , col + 3 , "صافي الربح الكلي بسعر صرف1420 ", main_cell_total)
+        worksheet.write_merge(row , row , col , col + 3 , "صافي الربح الكلي بسعر صرف1420 ", main_cell_total)
         worksheet.write(row, 4, total_credit_converted - total_average_val, main_cell_total)
         
             
