@@ -69,7 +69,7 @@ class MrpProductWizard(models.TransientModel):
         
 
         row = 1
-        call = 0
+        col = 0
 
         total_credit_converted = 0
         total_debit_converted = 0
