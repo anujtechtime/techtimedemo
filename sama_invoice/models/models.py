@@ -99,7 +99,9 @@ class MrpProductWizard(models.TransientModel):
 
             journal_items = self.env['account.move.line'].search([
                 ('partner_id', '=', cust.id),
-                ('credit', '>', 0)
+                ('credit', '>', 0),
+                ('date' , '<' , date_end),
+                ('date' , '>=' , date_start)
             ])
             total_credit = sum(journal_items.mapped('credit'))
             rate = cust.currency_rate or 1
@@ -111,7 +113,9 @@ class MrpProductWizard(models.TransientModel):
 
             journal_items = self.env['account.move.line'].search([
                 ('partner_id', '=', cust.id),
-                ('credit', '>', 0)
+                ('credit', '>', 0),
+                ('date' , '<' , date_end),
+                ('date' , '>=' , date_start)
             ])
             total_debit = sum(journal_items.mapped('debit'))
             rate = cust.currency_rate or 1
