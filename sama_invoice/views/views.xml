@@ -25,7 +25,7 @@
    <field name="arch" type="xml">
        <form>
         <label for="partner_id" name="partner_id" />
-           <field name="partner_id"/>
+           <field name="partner_id" widget="many2many_tags"/>
 
 
 
