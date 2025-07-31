@@ -13,7 +13,60 @@
         </tree>
       </field>
     </record>
+
+
 -->
+
+
+  <record id="view_invoice_data_wizard_data" model="ir.ui.view">
+   <field name="name">invoice.data.wizard.view</field>
+   <field name="model">invoice.data.wizard</field>
+   <field name="type">form</field>
+   <field name="arch" type="xml">
+       <form>
+        <label for="partner_id" name="partner_id" />
+           <field name="partner_id"/>
+
+
+
+
+        <label for="date_start" name="date_start" />
+           <field name="date_start"/>
+        <label for="date_end" name="date_end" invisible="1"/>   
+            <field name="date_end" invisible="1"/>
+
+        <label for="period" name="period" />
+           <field name="period"/>
+
+        <label for="average_exchange_rate" name="average_exchange_rate" />
+           <field name="average_exchange_rate"/> 
+                 
+         <footer>
+             <button name="report_for_analytic_acount" string="Print" type="object" class="oe_highlight"/>
+             <button string="Cancel" class="btn btn-default" special="cancel"/>
+         </footer>
+       </form>
+   </field>
+</record>
+
+
+
+        <record id="action_invoice_data_wizardwiz" model="ir.actions.act_window">
+            <field name="name">Invoice report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">invoice.data.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="context">{}</field>
+            <field name="view_id" ref="sama_invoice.view_invoice_data_wizard_data"/>
+            <field name="target">new</field>
+            
+        </record>
+
+
+        <menuitem action="action_invoice_data_wizardwiz" id="manu_action_invoice_balance_wiz" parent="contacts.res_partner_menu_contacts" sequence="15" name="Invoice Report"/>
+
+
+
   <record model="ir.ui.view" id="view_any_name_account_move_form_seq_sale">
     <field name="name">sale.order.form</field>
     <field name="model">sale.order</field>

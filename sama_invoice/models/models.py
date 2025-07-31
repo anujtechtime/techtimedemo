@@ -3,6 +3,196 @@
 from odoo import models, fields, api
 from datetime import datetime
 
+class InvoivRes(models.Model):
+    _inherit = "res.partner"
+
+    currency_rate = fields.Float(string='Currency Rate') 
+
+
+
+class MrpProductWizard(models.TransientModel):
+    _name = 'invoice.data.wizard'
+
+    partner_id = fields.Many2one("res.partner", string="Customer")
+    date_start = fields.Date("Date Start")
+    date_end = fields.Date("Date End")
+    currency_rate = fields.Float(string='Currency Rate')
+    period = fields.Char("Period")
+    average_exchange_rate  = fields.Float(string='Average Exchane Rate')
+
+    def report_for_analytic_acount(self):
+        filename = 'invoice_report.xls'
+        string = 'invoice_report.xls'
+        wb = xlwt.Workbook(encoding='utf-8')
+
+        header_bold = xlwt.easyxf("font: bold off, color black;\
+                     borders: top_color black, bottom_color black, right_color black, left_color black,\
+                              left thin, right thin, top thin, bottom thin;\
+                     pattern: pattern solid, fore_color white; font: bold on; pattern: pattern solid, fore_colour gray25; align: horiz centre; font: bold 1,height 240;")
+
+
+        header_bold_main_header = xlwt.easyxf("font: bold on, color black;\
+                     borders: top_color black, bottom_color black, right_color black, left_color black,\
+                              left thin, right thin, top thin, bottom thin;\
+                     pattern: pattern solid, fore_color white; font: bold on; align: horiz centre; align: vert centre")
+
+
+        
+        main_cell_total = xlwt.easyxf("font: bold off, color black;\
+                     borders: top_color black, bottom_color black, right_color black, left_color black,\
+                              left thin, right thin, top thin, bottom thin;\
+                     pattern: pattern solid, fore_color white; font: bold on; pattern: pattern solid, fore_colour ivory; align: horiz centre")
+
+
+        main_cell_total_of_total = xlwt.easyxf("font: bold off, color black;\
+                     borders: top_color black, bottom_color black, right_color black, left_color black,\
+                              left thin, right thin, top thin, bottom thin;\
+                     pattern: pattern solid, fore_color white; font: bold on; pattern: pattern solid, fore_colour lime; align: horiz centre")
+
+
+        header_bold_extra_tag = xlwt.easyxf("font: bold on; pattern: pattern solid, fore_colour green; font: color white; align: horiz centre")
+
+        header_bold_extra = xlwt.easyxf("font: bold on; pattern: pattern solid, fore_colour red; font: color white; align: horiz centre")
+        cell_format = xlwt.easyxf()
+        filename = 'Department_level_Report_%s.xls' % date.today()
+
+        main_cell = xlwt.easyxf('font: bold off, color black;\
+                     borders: top_color black, bottom_color black, right_color black, left_color black,\
+                              left thin, right thin, top thin, bottom thin;\
+                     pattern: pattern solid, fore_color white; align: horiz centre; font: bold 1,height 240;')
+        
+        
+
+        row = 1
+        call = 0
+
+        total_credit_converted = 0
+        total_debit_converted = 0
+        total_sum = 0
+        total_average_val = 0
+
+        worksheet = wb.add_sheet(string)
+        # worksheet.cols_right_to_left = True
+        
+        worksheet.write(row, 0, 'ت.', header_bold)
+
+        worksheet.write(row, 1, 'القسم ', header_bold)
+
+        worksheet.write(row, 2, 'سعر الصرف', header_bold)
+
+        worksheet.write(row, 3, 'مجموع المبيعات ', header_bold)
+
+        worksheet.write(row, 4, 'مجموع الكلف', header_bold)
+
+        worksheet.write(row, 5, "الربح الكلي " , header_bold) 
+
+        worksheet.write(row, 6, 'الكلف الحقيقية بسعر صرف', header_bold)
+
+        row = row + 1
+        for cust in  self.partner_id:
+            credit_converted = 0
+            debit_converted = 0
+            worksheet.write(row, 0, row or '', main_cell_total)    #student 
+
+            worksheet.write(row, 1, cust.display_name or '', main_cell_total)  #status
+            worksheet.write(row, 2, cust.currency_rate or '', main_cell_total) 
+
+            journal_items = self.env['account.move.line'].search([
+                ('partner_id', '=', cust.id),
+                ('credit', '>', 0)
+            ])
+            total_credit = sum(journal_items.mapped('credit'))
+            rate = cust.currency_rate or 1
+            credit_converted = total_credit / rate
+
+            total_credit_converted = total_credit_converted + credit_converted
+
+            worksheet.write(row, 3, credit_converted or '', main_cell_total)
+
+            journal_items = self.env['account.move.line'].search([
+                ('partner_id', '=', cust.id),
+                ('credit', '>', 0)
+            ])
+            total_debit = sum(journal_items.mapped('debit'))
+            rate = cust.currency_rate or 1
+            debit_converted = total_debit / rate
+
+            total_debit_converted = total_debit_converted + debit_converted
+
+            worksheet.write(row, 4, debit_converted or '', main_cell_total)
+
+            total_sum = total_sum + (debit_converted - credit_converted)
+
+
+            worksheet.write(row, 5, debit_converted - credit_converted, main_cell_total)
+
+            total_average_val = total_average_val + (debit_converted / self.average_exchange_rate)
+
+
+            worksheet.write(row, 6, debit_converted / self.average_exchange_rate, main_cell_total)
+
+            row = row + 1
+
+        # row = row + 1
+
+        worksheet.write_merge(rows , rows , col , col + 2 , "(total )المجموع ", main_cell_total)
+
+        worksheet.write(row, 3, total_credit_converted, main_cell_total)
+        worksheet.write(row, 4, total_debit_converted, main_cell_total)
+        worksheet.write(row, 5, total_sum, main_cell_total)
+        worksheet.write(row, 6, total_average_val, main_cell_total)
+
+        row = row + 1
+
+        worksheet.write_merge(rows , rows , col , col + 3 , "مجموع مبالغ الهدايا المدفوعة الى الأقسام  ", main_cell_total)
+        
+        row = row + 1
+
+        worksheet.write_merge(rows , rows , col , col + 3 , "مجموع المصاريف بسعر صرف1420 ", main_cell_total)
+        
+        row = row + 1
+
+        worksheet.write_merge(rows , rows , col , col + 3 , "صافي الربح الكلي بأسعار الصرف المختلفة  ", main_cell_total)
+        worksheet.write(row, 4, total_sum, main_cell_total)
+
+        row = row + 1
+
+        worksheet.write_merge(rows , rows , col , col + 3 , "صافي الربح الكلي بسعر صرف1420 ", main_cell_total)
+        worksheet.write(row, 4, total_credit_converted - total_average_val, main_cell_total)
+        
+            
+        fp = io.BytesIO()
+        print("fp@@@@@@@@@@@@@@@@@@",fp)
+        wb.save(fp)
+        print(wb)
+        out = base64.encodebytes(fp.getvalue())
+        attachment = {
+                       'name': str(filename),
+                       'display_name': str(filename),
+                       'datas': out,
+                       'type': 'binary'
+                   }
+        ir_id = self.env['ir.attachment'].create(attachment) 
+        print("ir_id@@@@@@@@@@@@@@@@",ir_id)
+
+        xlDecoded = base64.b64decode(out)
+
+        # file_added = "/home/anuj/Desktop/workspace13/payslip_report.xlsx"
+        # with open(file_added, "wb") as binary_file:
+        #     binary_file.write(xlDecoded)
+        base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
+        download_url = '/web/content/' + str(ir_id.id) + '?download=true'
+        return {
+            "type": "ir.actions.act_url",
+            "url": str(base_url) + str(download_url),
+            "target": "new",
+        }     
+
+
+
+
+
+
 class SamaaSoSD(models.Model):
     _inherit = "sale.order"
 
