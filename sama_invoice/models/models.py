@@ -2,6 +2,10 @@
 
 from odoo import models, fields, api
 from datetime import datetime
+import xlwt
+import io
+from lxml import etree
+import base64
 
 class InvoivRes(models.Model):
     _inherit = "res.partner"
@@ -13,7 +17,7 @@ class InvoivRes(models.Model):
 class MrpProductWizard(models.TransientModel):
     _name = 'invoice.data.wizard'
 
-    partner_id = fields.Many2one("res.partner", string="Customer")
+    partner_id = fields.Many2many("res.partner", string="Customer")
     date_start = fields.Date("Date Start")
     date_end = fields.Date("Date End")
     currency_rate = fields.Float(string='Currency Rate')
