@@ -5,6 +5,7 @@ from datetime import datetime
 import xlwt
 import io
 from lxml import etree
+from datetime import date, datetime, timedelta
 import base64
 
 class InvoivRes(models.Model):
@@ -58,7 +59,7 @@ class MrpProductWizard(models.TransientModel):
 
         header_bold_extra = xlwt.easyxf("font: bold on; pattern: pattern solid, fore_colour red; font: color white; align: horiz centre")
         cell_format = xlwt.easyxf()
-        filename = 'Department_level_Report_%s.xls' % date.today()
+        # filename = 'Department_level_Report_%s.xls' % date.today()
 
         main_cell = xlwt.easyxf('font: bold off, color black;\
                      borders: top_color black, bottom_color black, right_color black, left_color black,\
@@ -104,8 +105,8 @@ class MrpProductWizard(models.TransientModel):
             journal_items = self.env['account.move.line'].search([
                 ('partner_id', '=', cust.id),
                 ('credit', '>', 0),
-                ('date' , '<' , date_end),
-                ('date' , '>=' , date_start)
+                ('date' , '<' , self.date_end),
+                ('date' , '>=' , self.date_start)
             ])
             total_credit = sum(journal_items.mapped('credit'))
             rate = cust.currency_rate or 1
@@ -118,8 +119,8 @@ class MrpProductWizard(models.TransientModel):
             journal_items = self.env['account.move.line'].search([
                 ('partner_id', '=', cust.id),
                 ('credit', '>', 0),
-                ('date' , '<' , date_end),
-                ('date' , '>=' , date_start)
+                ('date' , '<' , self.date_end),
+                ('date' , '>=' , self.date_start)
             ])
             total_debit = sum(journal_items.mapped('debit'))
             rate = cust.currency_rate or 1
