@@ -46,7 +46,7 @@ class MrpProductWizard(models.TransientModel):
         main_cell_total = xlwt.easyxf("font: bold off, color black;\
                      borders: top_color black, bottom_color black, right_color black, left_color black,\
                               left thin, right thin, top thin, bottom thin;\
-                     pattern: pattern solid, fore_color white; font: bold on; pattern: pattern solid, fore_colour ivory; align: horiz centre")
+                     pattern: pattern solid, fore_color white; align: horiz centre")
 
 
         main_cell_total_of_total = xlwt.easyxf("font: bold off, color black;\
@@ -151,7 +151,7 @@ class MrpProductWizard(models.TransientModel):
         worksheet.write(row, 5, total_sum, main_cell_total)
         worksheet.write(row, 6, total_average_val, main_cell_total)
 
-        row = row + 1
+        row = row + 4
 
         worksheet.write_merge(row , row , col , col + 3 , "مجموع مبالغ الهدايا المدفوعة الى الأقسام  ", main_cell_total)
         
