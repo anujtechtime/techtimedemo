@@ -78,6 +78,17 @@ class MrpProductWizard(models.TransientModel):
 
         worksheet = wb.add_sheet(string)
         # worksheet.cols_right_to_left = True
+
+        worksheet.write_merge(row , row , col , col + 5 , "Summary Invoices  Report", main_cell_total)
+
+        row = row + 2
+
+        worksheet.write_merge(row , row , col , col + 3 , "Period" + self.period, main_cell_total)
+
+        row = row + 1
+
+        worksheet.write_merge(row , row , col , col + 3 , "Date: %s " % date.today()  + self.period, main_cell_total)
+   
         
         worksheet.write(row, 0, 'ت.', header_bold)
 
