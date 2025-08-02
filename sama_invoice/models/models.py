@@ -88,7 +88,8 @@ class MrpProductWizard(models.TransientModel):
         row = row + 1
 
         worksheet.write_merge(row , row , col , col + 3 , "Date: %s " % date.today()  + self.period, main_cell_total)
-   
+        
+        row = row + 3
         
         worksheet.write(row, 0, 'ت.', header_bold)
 
