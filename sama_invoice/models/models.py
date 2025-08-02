@@ -83,7 +83,7 @@ class MrpProductWizard(models.TransientModel):
 
         row = row + 2
 
-        worksheet.write_merge(row , row , col , col + 3 , "Period" + self.period, main_cell_total)
+        worksheet.write_merge(row , row , col , col + 3 , "Period: " + self.period, main_cell_total)
 
         row = row + 1
 
